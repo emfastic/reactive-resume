@@ -7,16 +7,16 @@ function ExperienceDesc(props) {
 
     function handleChange(input) {
         if (input.key === 'Enter') {
-            props.addExperienceDesc()
+            props.addDesc()
         }
         if (input.key === 'Backspace' && input.target.value === '') {
-            props.delBullet()
+            props.delDesc()
         }
     }
 
     return (
         <>{ props.shown ? 
-        <><span key={`bullet ${props.idx}`}>•</span><input key={`desc ${props.idx}`} onKeyUp={input => { handleChange(input); } } value={description} onChange={event => { setDescription(event.target.value); } } placeholder={'description'}></input></> : <br></br>}
+        <><span key={`bullet ${props.idx}`}>•</span><input key={`desc ${props.idx}`} onKeyUp={input => { handleChange(input); } } value={description} onChange={event => { setDescription(event.target.value); } } placeholder={'description'}></input></> : <></>}
         </>
     )
 }
