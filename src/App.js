@@ -15,7 +15,7 @@ function App() {
         <Route exact path='/signup' element={<SignIn/>}></Route>
         <Route exact path='/profile' element={<Profile/>}></Route>
         <Route exact path='/build' element={<Experiences/>}></Route>
-        <Route exact path='/create-resume' element={<CreateResume/>}></Route>
+        <Route exact path='/create' element={<CreateResume/>}></Route>
         <Route exact path='/skills' element={<Skills/>}></Route>
       </Routes>
     </Router>
