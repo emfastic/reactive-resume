@@ -12,7 +12,7 @@ function Education() {
     return(
         <>
         <input ref={school} placeholder='school'></input>
-        <input ref={secSchool} placeholder='Wallace E. Carroll School of Management'></input>
+        <input ref={secSchool} placeholder='major school name'></input>
         <input ref={major} placeholder='major'></input>
         <input ref={minor} placeholder='minor'></input>
         <input ref={gradDate} placeholder='graduation date'></input>

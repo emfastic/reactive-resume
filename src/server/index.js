@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child, update, push } from "firebase/database"
+import { getDatabase, ref, set, get, child, update, push, onValue } from "firebase/database"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -28,44 +28,58 @@ const auth = getAuth(app);
 // Initialize google auth instance
 const provider = new GoogleAuthProvider();
 
-function writeUserData(userId, email) {
-    set(ref(db, 'users/' + userId), {
-        email: email
+/* create new user instance in database */
+function writeUserData(user) {
+    set(ref(db, 'users/' + user.uid), {
+        email: user.email
     })
 }
 
-// Handle user sign in through Google
+/* used to verify valid domain to restrict users to BC community */
+function validateBCEmail(email) {
+    return email.split('@')[1] == 'bc.edu';
+}
+
+/* returns exists if user has account, new user if account was created, invalid email if domain doesn't match */
 function handleSignIn() {
     signInWithPopup(auth, provider)
     .then((result) => {
-    // Get Google login credential
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
+    
     // The signed-in user info.
     const user = result.user;
-    console.log(user.uid);
-    // Assess whether user exists or not; if he does not exist then create account
+    
+    // Assess whether user exists or not; if he does not exist then create account if valid email domain
     get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
+            let value = snapshot.val();
+            console.log(value.experiences[Object.keys(value.experiences)[0]])
+            return "exists"
         } else {
-            writeUserData(user.uid, user.email)
+            // if valid email given; create new user and send to profile creation page
+            // otherwise, return that it's an invalid email
+            if (validateBCEmail(user.email)) {
+                writeUserData(user)
+                return "new user"
+            }
+
+            return "invalid email"
         }
     })
     }).catch((error) => {
-    // Handle Errors here.
+    // Handle login error
     const errorCode = error.code;
     const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
+    const userEmail = error.customData.email;
+    
+    // TODO: Redirect to error page
+    console.log('user:', userEmail)
+    console.log('error code:', errorCode);
+    console.log('error message:', errorMessage);
     });
 }
 
-// Update the user's profile to contain a first name, last name, phone number, and alt email to be used on resume
-function updateProfile(firstName, lastName, phoneNumber, alternateEmail = null) {
+/* Update the user's profile to contain a first name, last name, phone number, alt email, and website to be used on resume */
+function updateProfile(firstName, lastName, phoneNumber, alternateEmail, website) {
     
     // Get current user
     const user = auth.currentUser;
@@ -76,7 +90,8 @@ function updateProfile(firstName, lastName, phoneNumber, alternateEmail = null) 
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            alternateEmail: alternateEmail
+            alternateEmail: alternateEmail,
+            website: website
         })
     } else {
         console.log("no current user")
@@ -84,6 +99,7 @@ function updateProfile(firstName, lastName, phoneNumber, alternateEmail = null) 
     
 }
 
+/* used to generate keyed database items (experiences, education) to prevent nesting based on same organization name */
 function updateKeyedObjectSection(objArray, endpoint) {
     // Iterate through each item in the object array, generate a new key, and set item object for that key
     // Push object to the given endpoint
@@ -92,6 +108,7 @@ function updateKeyedObjectSection(objArray, endpoint) {
     })
 }
 
+/* used to update skills section */
 function updateStandardObjectSection(array, endpoint) {
     // Iterate through each item in array add to given endpoint
     array.forEach(item => {
@@ -99,5 +116,19 @@ function updateStandardObjectSection(array, endpoint) {
     })
 }
 
+// let userResumeData = null
+// console.log(auth.currentUser)
 
-export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection };
+/* used to get object with data for user's resume; must check for user first */
+// if (auth.currentUser) {
+//     const userResumeDataRef = ref(db, `users/${auth.currentUser.uid}`)
+    
+//     onValue(userResumeDataRef, (snapshot) => {
+//         userResumeData = snapshot.val();
+//         console.log(userResumeData)
+//     })
+// }
+
+
+
+export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, userResumeData };

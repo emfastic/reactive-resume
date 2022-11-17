@@ -1,5 +1,5 @@
-import docx, { LevelFormat, convertInchesToTwip, SpaceType } from "docx";
-import { ref } from 'firebase/database';
+import docx, { convertInchesToTwip } from "docx";
+ 
 const {
     AlignmentType,
     Document,
@@ -13,7 +13,11 @@ const {
   } = docx;
 
 const fontType = 'Times New Roman'
+
+// divided by 2 gives real font size
 const bodyFontSize = 24;
+
+// Redefine because of smaller margins
 TabStopPosition.MAX = 12200;
 
 const user = {

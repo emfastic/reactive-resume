@@ -1,7 +1,7 @@
 import React from "react";
 import { saveAs } from 'file-saver';
 import { Packer } from "docx";
-import { experiences, education, skills, achievements } from "../server/cv-data.js";
+import { userResumeData } from "../server/index.js";
 import { DocumentCreatorTest } from "../server/resume.js";
 
 function CreateResume() {

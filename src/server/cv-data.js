@@ -1,4 +1,4 @@
-export const experiences = [
+export const experience = [
     {
       isCurrent: true,
       summary: "Full-stack developer working with Angular and Java. Working for the iShares platform",
