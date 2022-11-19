@@ -1,0 +1,48 @@
+@import "../utilities/variables";
+
+.title {
+    font-family: "lucida grande";
+    font-size: 72px;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 8px;
+}
+
+.tagline {
+    font-family: "lucida grande";
+    font-size: 20px;
+    text-align: center;
+    padding-top: 0px;
+}
+
+.main-point {
+    font-family: "lucida grande";
+    text-align: left;
+    font-size: 36px;
+    font-weight: bold;
+    padding-left: 30px;
+    padding-right: 38px;
+    background-color: red;
+}
+
+img.pencil {
+    background-color: $lavender;
+    width: 90px;
+    height: 90px;
+    padding-left: 13px;
+    padding-right: 4px;
+}
+
+img.build {
+    background-color: $lavender;
+    width: 107px;
+    height: 107px;
+}
+
+img.diamond {
+    background-color: $lavender;
+    width: 87px;
+    height: 75px;
+    padding-left: 18px;
+    padding-right: 2px;
+}
