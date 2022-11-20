@@ -1,7 +1,11 @@
 @import "../utilities/variables";
 
-.title {
+* {
     font-family: "lucida grande";
+    color: white;
+}
+
+.title {
     font-size: 72px;
     text-align: center;
     padding-top: 12px;
@@ -9,40 +13,116 @@
 }
 
 .tagline {
-    font-family: "lucida grande";
     font-size: 20px;
     text-align: center;
     padding-top: 0px;
 }
 
 .main-point {
-    font-family: "lucida grande";
     text-align: left;
     font-size: 36px;
     font-weight: bold;
     padding-left: 30px;
-    padding-right: 38px;
+    padding-right: 24px;
     background-color: red;
+    vertical-align: middle;
+}
+
+.point-desc {
+    text-align: left;
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+.test {
+    background-color: lightblue;
+    margin-bottom: 100px;
+}
+
+.signup {
+    position: absolute;
+    top: 54%;
+
+    .text {
+        white-space: pre;
+        font-size: 15px;
+    }
+
+    .google {
+        font-size: 15px;
+        text-decoration: underline;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.signin-button {
+    background-color: $dark-purple;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    position: absolute;
+    font-size: 25px;
+    top: 45%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.signin-div {
+    background-color: blue;
+    display: flex;
+    justify-content: center;
 }
 
 img.pencil {
-    background-color: $lavender;
+    background-color: blue;
     width: 90px;
     height: 90px;
     padding-left: 13px;
     padding-right: 4px;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 img.build {
-    background-color: $lavender;
+    background-color: green;
     width: 107px;
     height: 107px;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 img.diamond {
-    background-color: $lavender;
+    background-color: purple;
     width: 87px;
     height: 75px;
     padding-left: 18px;
     padding-right: 2px;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.page-left {
+    left: 0px;
+    width: 75%;
+    height: 100%;
+    position: fixed;
+    background-color: $forest-green;
+}
+
+.page-right {
+    right: 0px;
+    width: 25%;
+    height: 100%;
+    position: fixed;
+    background-color: $lavender;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 100px 50px rgba($color: #000000, $alpha: .5);
 }
