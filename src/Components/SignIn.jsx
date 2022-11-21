@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { handleSignIn } from '../server/index'
 import stem from "../assets/stem-resume.png"
 import business from "../assets/business-resume.png"
@@ -11,6 +11,14 @@ import { useScroll } from "react-use-gesture";
 const resumes = [business, comm, stem, business2]
 
 function SignIn() {
+
+    // used to scroll to end so user knows it's scrollable
+    const end = useRef(null);
+
+    // scroll on render; wait so that user sees the effect
+    useEffect(() => {
+        setTimeout(() => end.current.scrollIntoView({behavior: "smooth"}), 500)
+    }, [])
 
     // make sure scroll turn doesn't exceed 30 deg
     const clamp = (value, clampAt = 30) => {
@@ -51,12 +59,13 @@ function SignIn() {
               }}
             />
           ))}
+        <div ref={end}></div>
         </div>
         </div>
         <div className="page-right">
         <div onClick={handleSignIn} className="signin-button login">Login with Google</div>
         <div className="signup-subtext">
-        <text className="text">No account? Sign up with </text><span onClick={handleSignIn} className="google">Google</span>
+        <span className="text">No account? Sign up with </span><span onClick={handleSignIn} className="google">Google</span>
         </div>
         </div>
         </>
