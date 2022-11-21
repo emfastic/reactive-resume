@@ -1,55 +1,87 @@
 @import "../utilities/variables";
 
+// set font for whole page
 * {
-    font-family: "lucida grande";
+    font-family: "optima";
+}
+
+// set left half of page
+.page-left {
+    left: 0px;
+    width: 75%;
+    height: 100%;
+    position: fixed;
+    background-color: $midnight-blue;
     color: white;
 }
 
+// set Reactive Resume title
 .title {
-    font-size: 72px;
+    font-size: 10vmin;
     text-align: center;
-    padding-top: 12px;
-    padding-bottom: 8px;
+    padding-top: 6px;
 }
 
+// set Reactive Resume tagline
 .tagline {
-    font-size: 20px;
+    font-size: 3vmin;
     text-align: center;
-    padding-top: 0px;
+    margin-bottom: 20px;
 }
 
-.main-point {
-    text-align: left;
-    font-size: 36px;
-    font-weight: bold;
-    padding-left: 30px;
-    padding-right: 24px;
-    background-color: red;
-    vertical-align: middle;
+// hide default scrollbar for resumes
+::-webkit-scrollbar {
+    width: 0px;
+  }
+
+// make resume scroll bar container
+.img-container {
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+    padding: 10px 0;
 }
 
-.point-desc {
-    text-align: left;
-    font-size: 24px;
-    vertical-align: middle;
+// set resume size and add padding for both sides so not hugging page break
+.resume {
+    flex-shrink: 0;
+    width: 60vh;
+    height: 76vh;
+    border-radius: 6px;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
-.test {
-    background-color: lightblue;
-    margin-bottom: 100px;
+// set right side
+.page-right {
+    right: 0px;
+    width: 25%;
+    height: 100%;
+    position: fixed;
+    background-color: $light-lavender;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 100px 50px rgba($color: #FFFF, $alpha: .5);
 }
 
-.signup {
+// build signup subtext
+.signup-subtext {
     position: absolute;
     top: 54%;
+    color: $midnight-blue;
 
+    // non a-tag text
     .text {
         white-space: pre;
-        font-size: 15px;
+        font-size: 2.1vmin;
     }
 
+    // a tag
     .google {
-        font-size: 15px;
+        font-size: 2.1vmin;
         text-decoration: underline;
         &:hover {
             cursor: pointer;
@@ -57,72 +89,17 @@
     }
 }
 
+// build signup button
 .signin-button {
-    background-color: $dark-purple;
+    background-color: $midnight-blue;
     color: white;
-    border-radius: 5px;
-    padding: 15px;
+    border-radius: 40px;
+    padding: 2.1vmin;
     position: absolute;
-    font-size: 25px;
+    font-size: 4vmin;
     top: 45%;
 
     &:hover {
         cursor: pointer;
     }
-}
-
-.signin-div {
-    background-color: blue;
-    display: flex;
-    justify-content: center;
-}
-
-img.pencil {
-    background-color: blue;
-    width: 90px;
-    height: 90px;
-    padding-left: 13px;
-    padding-right: 4px;
-    vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-img.build {
-    background-color: green;
-    width: 107px;
-    height: 107px;
-    vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-img.diamond {
-    background-color: purple;
-    width: 87px;
-    height: 75px;
-    padding-left: 18px;
-    padding-right: 2px;
-    vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.page-left {
-    left: 0px;
-    width: 75%;
-    height: 100%;
-    position: fixed;
-    background-color: $forest-green;
-}
-
-.page-right {
-    right: 0px;
-    width: 25%;
-    height: 100%;
-    position: fixed;
-    background-color: $lavender;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0px 0px 100px 50px rgba($color: #000000, $alpha: .5);
 }

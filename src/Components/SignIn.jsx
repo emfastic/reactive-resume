@@ -1,40 +1,62 @@
 import React from "react";
 import { handleSignIn } from '../server/index'
-import pencil from './../assets/pencil.png'
-import build from './../assets/build.png'
-import diamond from './../assets/diamond.png'
+import stem from "../assets/stem-resume.png"
+import business from "../assets/business-resume.png"
+import business2 from "../assets/business-resume2.png"
+import comm from "../assets/communication-resume.png"
 import "../sass/layout/signin.scss"
+import { animated, useSpring } from "react-spring";
+import { useScroll } from "react-use-gesture";
 
+const resumes = [business, comm, stem, business2]
 
 function SignIn() {
+
+    // make sure scroll turn doesn't exceed 30 deg
+    const clamp = (value, clampAt = 30) => {
+        if (value > 0) {
+          return value > clampAt ? clampAt : value;
+        } else {
+          return value < -clampAt ? -clampAt : value;
+        }
+      };
+
+    // add 3D effect on scroll
+    const [style, set] = useSpring(() => ({
+        transform: "perspective(500px) rotateY(0deg)"
+      }));
+    
+    // turn elements on scroll
+    const bind = useScroll(event => {
+        set({
+            transform: `perspective(500px) rotateY(${
+            event.scrolling ? clamp(event.delta[0]) : 0
+            }deg)`
+        });
+    });
 
     return (
         <>
         <div className="page-left">
         <div className="title">Reactive Resume</div>
         <div className="tagline">Generate a resume without the pain of formatting.</div>
-        <span className="test">
-        <img src={pencil} className="pencil"/>
-        <span className="main-point">TRACK</span>
-        <span className="point-desc">experiences across multiple fields</span>
-        </span>
-        <br/>
-        <span className="test">
-        <img src={build} className="build"/>
-        <span className="main-point">BUILD</span>
-        <span className="point-desc">one section at a time</span>
-        </span>
-        <br/>
-        <span className="test">
-        <img src={diamond} className="diamond"/>
-        <span className="main-point">CREATE</span>
-        <span className="point-desc">professional resumes</span>
-        </span>
+        <div className="img-container" {...bind()}>
+        {resumes.map(src => (
+            <animated.div
+              key={src}
+              className="resume"
+              style={{
+                ...style,
+                backgroundImage: `url(${src})`
+              }}
+            />
+          ))}
+        </div>
         </div>
         <div className="page-right">
-        <a onClick={handleSignIn} className="signin-button login">Login with Google</a>
-        <div className="signup">
-        <text className="text">No account? Sign up with </text><a onClick={handleSignIn} className="google">Google</a>
+        <div onClick={handleSignIn} className="signin-button login">Login with Google</div>
+        <div className="signup-subtext">
+        <text className="text">No account? Sign up with </text><span onClick={handleSignIn} className="google">Google</span>
         </div>
         </div>
         </>
