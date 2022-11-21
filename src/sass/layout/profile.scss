@@ -1,0 +1,84 @@
+@import "../utilities/variables";
+
+.container {
+    height: 100%;
+    width: 100%;
+    background-color: blue;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-header {
+    font-size: 11vmin;
+    margin-left: 8vmin;
+    margin-top: 5vmin;
+}
+
+.testing {
+    display: flex;
+    justify-content: right;
+    * {
+        background-color: green;
+        padding: 15px 60px 15px 60px;
+        border-radius: 12px;
+    }
+}
+  
+.profile-form {
+    padding-top: 3vmin;
+    max-width: 340px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+  
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    label {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(0px, 28px) scale(1);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 24px;
+        line-height: 1;
+        // make equal to padding in input
+        left: 21px;
+    }
+
+    &:focus-within label {
+        transform: translate(-12px, 8px) scale(0.8);
+        color: #0a53e4;
+        font-size: 16px;
+    }
+
+    .filled {
+        transform: translate(-12px, 8px) scale(0.8);
+        font-size: 16px;
+    }
+
+    input {
+        height: 64px;
+        border-radius: 4px;
+        border: none;
+        // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
+        padding: 11px 21px 0px;
+        font-size: 24px;
+        line-height: 1;
+        outline: none;
+        box-shadow: none;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background-color: white;
+
+        &:focus {
+            box-shadow: 0 0 0 2px #79b1ff;
+        }
+    }
+}
