@@ -4,7 +4,6 @@ import "../sass/layout/profile.scss";
 const TextInput = forwardRef((props, _ref) => {
   const [value, setValue] = useState('');
 
-
   function handleChange(e) {
     setValue(e.target.value);
   }
