@@ -13,12 +13,16 @@ const resumes = [business, comm, stem, business2]
 function SignIn() {
 
     // used to scroll to end so user knows it's scrollable
+    const beg = useRef(null)
     const end = useRef(null);
 
-    // scroll on render; wait so that user sees the effect
+    // scroll on render; wait so that user sees the effect and then scroll back to beg
     useEffect(() => {
-        setTimeout(() => end.current.scrollIntoView({behavior: "smooth"}), 500)
+        setTimeout(() => {end.current.scrollIntoView({behavior: "smooth"})}, 500)
+        setTimeout(() => {beg.current.scrollIntoView({behavior: "smooth"})}, 2100)
     }, [])
+
+    
 
     // make sure scroll turn doesn't exceed 30 deg
     const clamp = (value, clampAt = 30) => {
@@ -49,6 +53,7 @@ function SignIn() {
         <div className="title">Reactive Resume</div>
         <div className="tagline">Generate a resume without the pain of formatting.</div>
         <div className="img-container" {...bind()}>
+        <div ref={beg}></div>
         {resumes.map(src => (
             <animated.div
               key={src}

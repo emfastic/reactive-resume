@@ -3,27 +3,32 @@ import { updateProfile } from "../server/index";
 import TextInput from "./TextInput";
 
 function Profile() {
-    const firstName = useRef(null);
-    const lastName = useRef(null);
-    const phoneNumber = useRef(null);
-    const alternativeEmail = useRef(null);
-    const website = useRef(null);
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const phoneNumRef = useRef();
 
-        // <input ref={lastName} placeholder="last name"></input>
-        // <input ref={phoneNumber} placeholder="phone number"></input>
-        // <input ref={alternativeEmail} placeholder="email"></input>
-        // <input ref={website} placeholder="website"></input>
-        // <button onClick={() => updateProfile(firstName.current.value, lastName.current.value, phoneNumber.current.value, alternativeEmail.current.value, website.current.value)}>Update Profile</button>
+    function handleProfileSubmit() {
+        const firstName = firstNameRef.current.getValue();
+        const lastName = lastNameRef.current.getValue();
+        let phoneNum = phoneNumRef.current.getValue();
+
+        // strip phone formatting for update
+        phoneNum = phoneNum.replace(/\D/g, '');
+
+        updateProfile(firstName, lastName, phoneNum);
+    }
 
     return (
         <>
         <div className="container">
-        <div className="prompt-header">Create Profile</div>
+        <span className="prompt-header">Create Profile</span>
         <form className="profile-form">
-        <TextInput label="first name"></TextInput>
-        <TextInput label="last name"></TextInput>
-        <TextInput label="phone number"></TextInput>
-        <span className="testing"><span>testing</span></span>
+        <TextInput label="First Name" ref={firstNameRef} phone={false}></TextInput>
+        <TextInput label="Last Name" ref={lastNameRef} phone={false}></TextInput>
+        <TextInput label="Phone Number" ref={phoneNumRef} phone={true}></TextInput>
+        <span className="submit-container">
+        <span className="submit-button" onClick={handleProfileSubmit}>Next</span>
+        </span>
         </form>
         </div>
         </>

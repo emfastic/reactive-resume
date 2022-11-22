@@ -79,7 +79,7 @@ function handleSignIn() {
 }
 
 /* Update the user's profile to contain a first name, last name, phone number, alt email, and website to be used on resume */
-function updateProfile(firstName, lastName, phoneNumber, alternateEmail, website) {
+function updateProfile(firstName, lastName, phoneNumber) {
     
     // Get current user
     const user = auth.currentUser;
@@ -90,8 +90,6 @@ function updateProfile(firstName, lastName, phoneNumber, alternateEmail, website
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            alternateEmail: alternateEmail,
-            website: website
         })
     } else {
         console.log("no current user")

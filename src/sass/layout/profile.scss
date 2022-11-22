@@ -3,32 +3,39 @@
 .container {
     height: 100%;
     width: 100%;
-    background-color: blue;
     position: fixed;
-    align-items: center;
-    justify-content: center;
+    display: flex;
 }
 
 .prompt-header {
-    font-size: 11vmin;
-    margin-left: 8vmin;
-    margin-top: 5vmin;
+    font-size: 9vmin;
+    margin-left: 6vmin;
+    margin-top: 3.2vmin;
+    // margin: 0 auto;
+    color: $midnight-blue;
 }
 
-.testing {
+.submit-container {
     display: flex;
     justify-content: right;
-    * {
-        background-color: green;
-        padding: 15px 60px 15px 60px;
+    .submit-button {
+        background-color: $midnight-blue;
+        padding: 10px 20px 10px 20px;
         border-radius: 12px;
+        color: $light-lavender;
+        font-size: 24px;
+        
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
   
 .profile-form {
-    padding-top: 3vmin;
     max-width: 340px;
-    margin: 0 auto;
+    position: fixed;
+    top: 30%;
+    left: 40%;
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
@@ -38,6 +45,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    font-family: "arial";
 
     label {
         position: absolute;
@@ -54,19 +62,19 @@
     }
 
     &:focus-within label {
-        transform: translate(-12px, 8px) scale(0.8);
-        color: #0a53e4;
-        font-size: 16px;
+        transform: translate(-6px, 9px) scale(0.8);
+        color: $midnight-blue;
+        font-size: 18px;
     }
 
     .filled {
-        transform: translate(-12px, 8px) scale(0.8);
-        font-size: 16px;
+        transform: translate(-6px, 9px) scale(0.8);
+        font-size: 18px;
     }
 
     input {
         height: 64px;
-        border-radius: 4px;
+        border-radius: 24px;
         border: none;
         // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
         padding: 11px 21px 0px;
@@ -76,9 +84,12 @@
         box-shadow: none;
         transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
         background-color: white;
+        outline: solid;
+        outline-color: $midnight-blue;
+        outline-width: .3vmin;
 
         &:focus {
-            box-shadow: 0 0 0 2px #79b1ff;
+            box-shadow: 0 0 8px 8px $light-lavender;
         }
     }
 }
