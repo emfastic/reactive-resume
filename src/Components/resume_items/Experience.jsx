@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react"
 import { updateKeyedObjectSection } from "../../server/index.js"
 import ExperienceDesc from "./ExperienceDesc.jsx"
+import TextInput from "../TextInput.jsx"
+import "../../sass/layout/experience.scss"
 
 function Experience() {
-    let organization = useRef(null)
-    let title = useRef(null)
-    let location = useRef(null)
-    let startDate = useRef(null)
-    let endDate = useRef(null)
+    let organizationRef = useRef()
+    let titleRef= useRef()
+    let locationRef = useRef()
+    let startDateRef = useRef()
+    let endDateRef= useRef()
 
     const [show1, setShow1] = useState(false)
     const [show2, setShow2] = useState(false)
@@ -127,30 +129,36 @@ function Experience() {
         return description
     }
 
+    function handleExperienceSubmit() {
+        // get values from text inputs; convert the descriptions
+        updateKeyedObjectSection([{
+            organization: organizationRef.current.getValue(),
+            title: titleRef.current.getValue(),
+            location: locationRef.current.getValue(),
+            startDate: startDateRef.current.getValue(),
+            endDate: endDateRef.current.getValue(),
+            description: convertDescsToCSV(valObjArray)
+        }, 'experiences'])
+    }
+
     return (
         <>
+        <div>
+        <TextInput label="Position Title" ref={titleRef}></TextInput>
+        <TextInput label="Organization" ref={organizationRef}></TextInput>
+        </div>
+        <div>
+        <TextInput label="Location" ref={locationRef}></TextInput>
+        <TextInput label="Start Date" ref={startDateRef}></TextInput>
+        <TextInput label="End Date" ref={endDateRef}></TextInput>
+        </div>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(0, setArray, bulletArray)}} addDesc={() => {showBullet(0, setArray, bulletArray)}} idx={0} shown={true}></ExperienceDesc>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(1, setArray, bulletArray)}} addDesc={() => {showBullet(1, setArray, bulletArray)}} idx={1} shown={show1}></ExperienceDesc>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(2, setArray, bulletArray)}} addDesc={() => {showBullet(2, setArray, bulletArray)}} idx={2} shown={show2}></ExperienceDesc>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(3, setArray, bulletArray)}} addDesc={() => {showBullet(3, setArray, bulletArray)}} idx={3} shown={show3}></ExperienceDesc>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(4, setArray, bulletArray)}} addDesc={() => {showBullet(4, setArray, bulletArray)}} idx={4} shown={show4}></ExperienceDesc>
         <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(5, setArray, bulletArray)}} addDesc={() => {showBullet(5, setArray, bulletArray)}} idx={5} shown={show5}></ExperienceDesc>
-        <br/>
-        <br/>
-        <br/>
-        <input ref={organization} placeholder={`organization 1`}></input>
-        <input ref={title} placeholder={`title 1`}></input>
-        <input ref={location} placeholder={`location 1`}></input>
-        <input ref={startDate} placeholder={`start date 1`}></input>
-        <input ref={endDate} placeholder={`end date 1`}></input>
-        <button onClick={() => { updateKeyedObjectSection([{
-            organization: organization.current.value,
-            title: title.current.value,
-            location: location.current.value,
-            startDate: startDate.current.value,
-            endDate: endDate.current.value,
-            description: convertDescsToCSV(valObjArray)
-        }], 'experiences') }}>Update Experiences</button>
+        <button onClick={handleExperienceSubmit}>Update Experiences</button>
         </>
     )
 }

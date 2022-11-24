@@ -31,7 +31,7 @@ function CreateResume() {
       }
 
       return (
-        <button onClick={handleClick}>Generate Resume</button>
+        <button onClick={generate}>Generate Resume</button>
       )
 }
 

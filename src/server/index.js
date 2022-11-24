@@ -47,36 +47,48 @@ function handleSignIn() {
     
     // The signed-in user info.
     const user = result.user;
+
+    onValue(child(dbRef, `users/${user.uid}`), snapshot => {
+        if (snapshot.exists()) {
+            return snapshot.val()
+        } else if (validateBCEmail(user.email)) {
+                writeUserData(user)
+                return snapshot.val()
+        }
+        return null
+    })
+    })
+}
     
     // Assess whether user exists or not; if he does not exist then create account if valid email domain
-    get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            let value = snapshot.val();
-            console.log(value.experiences[Object.keys(value.experiences)[0]])
-            // return "exists"
-        } else {
-            // if valid email given; create new user and send to profile creation page
-            // otherwise, return that it's an invalid email
-            if (validateBCEmail(user.email)) {
-                writeUserData(user)
-                // return "new user"
-            }
+    // get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //         let value = snapshot.val();
+    //         console.log(value.experiences[Object.keys(value.experiences)[0]])
+    //         // return "exists"
+    //     } else {
+    //         // if valid email given; create new user and send to profile creation page
+    //         // otherwise, return that it's an invalid email
+    //         if (validateBCEmail(user.email)) {
+    //             writeUserData(user)
+    //             // return "new user"
+    //         }
 
-            // return "invalid email"
-        }
-    })
-    }).catch((error) => {
-    // Handle login error
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const userEmail = error.customData.email;
+    //         // return "invalid email"
+    //     }
+    // })
+    // }).catch((error) => {
+    // // Handle login error
+    // const errorCode = error.code;
+    // const errorMessage = error.message;
+    // const userEmail = error.customData.email;
     
-    // TODO: Redirect to error page
-    console.log('user:', userEmail)
-    console.log('error code:', errorCode);
-    console.log('error message:', errorMessage);
-    });
-}
+    // // TODO: Redirect to error page
+    // console.log('user:', userEmail)
+    // console.log('error code:', errorCode);
+    // console.log('error message:', errorMessage);
+    // });
+// }
 
 /* Update the user's profile to contain a first name, last name, phone number, alt email, and website to be used on resume */
 function updateProfile(firstName, lastName, phoneNumber) {
@@ -121,10 +133,11 @@ function trackUserData() {
     }
 
     onValue(child(dbRef, `users/${auth.currentUser.uid}`), snapshot => {
-        console.log(snapshot.val()) 
+        // update state in here
+        return snapshot.val()
     })
 }
 
 
 
-export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, trackUserData };
+export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, trackUserData, auth, provider, validateBCEmail, writeUserData, dbRef };

@@ -35,12 +35,12 @@ const TextInput = forwardRef((props, _ref) => {
   }))
 
   return (
-    <div className="input-container">
+    <span className="input-container">
       <input className="text-input" value={value} onChange={props.phone ?  handlePhoneChange : handleChange}/>
       <label className={value && 'filled'}>
         {props.label}
       </label>
-    </div>
+    </span>
   )
 });
 
