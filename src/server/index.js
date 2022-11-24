@@ -37,7 +37,7 @@ function writeUserData(user) {
 
 /* used to verify valid domain to restrict users to BC community */
 function validateBCEmail(email) {
-    return email.split('@')[1] == 'bc.edu';
+    return email.split('@')[1] === 'bc.edu';
 }
 
 /* returns exists if user has account, new user if account was created, invalid email if domain doesn't match */
@@ -53,16 +53,16 @@ function handleSignIn() {
         if (snapshot.exists()) {
             let value = snapshot.val();
             console.log(value.experiences[Object.keys(value.experiences)[0]])
-            return "exists"
+            // return "exists"
         } else {
             // if valid email given; create new user and send to profile creation page
             // otherwise, return that it's an invalid email
             if (validateBCEmail(user.email)) {
                 writeUserData(user)
-                return "new user"
+                // return "new user"
             }
 
-            return "invalid email"
+            // return "invalid email"
         }
     })
     }).catch((error) => {
@@ -79,7 +79,7 @@ function handleSignIn() {
 }
 
 /* Update the user's profile to contain a first name, last name, phone number, alt email, and website to be used on resume */
-function updateProfile(firstName, lastName, phoneNumber, alternateEmail, website) {
+function updateProfile(firstName, lastName, phoneNumber) {
     
     // Get current user
     const user = auth.currentUser;
@@ -90,8 +90,6 @@ function updateProfile(firstName, lastName, phoneNumber, alternateEmail, website
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            alternateEmail: alternateEmail,
-            website: website
         })
     } else {
         console.log("no current user")
@@ -116,19 +114,17 @@ function updateStandardObjectSection(array, endpoint) {
     })
 }
 
-// let userResumeData = null
-// console.log(auth.currentUser)
+/* trigger onValue event on create resume page to make sure data is current */
+function trackUserData() {
+    if (auth.currentUser === null) {
+        return
+    }
 
-/* used to get object with data for user's resume; must check for user first */
-// if (auth.currentUser) {
-//     const userResumeDataRef = ref(db, `users/${auth.currentUser.uid}`)
-    
-//     onValue(userResumeDataRef, (snapshot) => {
-//         userResumeData = snapshot.val();
-//         console.log(userResumeData)
-//     })
-// }
+    onValue(child(dbRef, `users/${auth.currentUser.uid}`), snapshot => {
+        console.log(snapshot.val()) 
+    })
+}
 
 
 
-export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, userResumeData };
+export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, trackUserData };

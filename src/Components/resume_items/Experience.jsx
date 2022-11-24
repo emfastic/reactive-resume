@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { updateKeyedObjectSection } from "../../server/index.js"
 import ExperienceDesc from "./ExperienceDesc.jsx"
 
-function Experiences() {
+function Experience() {
     let organization = useRef(null)
     let title = useRef(null)
     let location = useRef(null)
@@ -155,4 +155,4 @@ function Experiences() {
     )
 }
 
-export default Experiences
+export default Experience

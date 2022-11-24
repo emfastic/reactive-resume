@@ -1,0 +1,105 @@
+@import "../utilities/variables";
+
+// set font for whole page
+* {
+    font-family: "arial";
+}
+
+// set left half of page
+.page-left {
+    left: 0px;
+    width: 75%;
+    height: 100%;
+    position: fixed;
+    background-color: $midnight-blue;
+    color: white;
+}
+
+// set Reactive Resume title
+.title {
+    font-size: 10vmin;
+    text-align: center;
+    padding-top: 6px;
+}
+
+// set Reactive Resume tagline
+.tagline {
+    font-size: 3vmin;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+// hide default scrollbar for resumes
+::-webkit-scrollbar {
+    width: 0px;
+  }
+
+// make resume scroll bar container
+.img-container {
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+    padding: 10px 0;
+}
+
+// set resume size and add padding for both sides so not hugging page break
+.resume {
+    flex-shrink: 0;
+    width: 60vh;
+    height: 76vh;
+    border-radius: 6px;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+// set right side
+.page-right {
+    right: 0px;
+    width: 25%;
+    height: 100%;
+    position: fixed;
+    background-color: $light-lavender;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 100px 50px rgba($color: #FFFF, $alpha: .5);
+}
+
+// build signup subtext
+.signup-subtext {
+    position: absolute;
+    top: 54%;
+    color: $midnight-blue;
+
+    // non a-tag text
+    .text {
+        white-space: pre;
+        font-size: 2.1vmin;
+    }
+
+    // a tag
+    .google {
+        font-size: 2.1vmin;
+        text-decoration: underline;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+// build signup button
+.signin-button {
+    background-color: $midnight-blue;
+    color: white;
+    border-radius: 40px;
+    padding: 2.1vmin;
+    position: absolute;
+    font-size: 4vmin;
+    top: 45%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
