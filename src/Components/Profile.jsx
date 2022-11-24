@@ -33,7 +33,7 @@ function Profile() {
         <form className="profile-form">
         <TextInput label="First Name" ref={firstNameRef}></TextInput>
         <TextInput label="Last Name" ref={lastNameRef}></TextInput>
-        <TextInput label="Phone Number" ref={phoneNumRef} phone={true}></TextInput>
+        <TextInput label="Phone Number" ref={phoneNumRef} phone="true"></TextInput>
         <span className="submit-container">
         <span className="submit-button" onClick={handleProfileSubmit}>Next</span>
         </span>
