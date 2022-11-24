@@ -10,30 +10,31 @@ function Education(props) {
     let gradDateRef = useRef(null);
     let gpaRef = useRef(null);
     
-
-    // <input ref={school} placeholder='school'></input>
-    //     <input ref={secSchool} placeholder='major school name'></input>
-    //     <input ref={major} placeholder='major'></input>
-    //     <input ref={minor} placeholder='minor'></input>
-    //     <input ref={gradDate} placeholder='graduation date'></input>
-    //     <input ref={gpa} placeholder='GPA'></input>
-    //     <button onClick={() => {updateKeyedObjectSection([{school: school.current.value, major: major.current.value, 
-    //         minor: minor.current.value, gradDate: gradDate.current.value, gpa: gpa.current.value, secSchool: secSchool.current.value}], 'education')}}>Update Education</button>
+    function handleSubmit() {
+        updateKeyedObjectSection([{
+            school: schoolRef.current.getValue(),
+            major: majorRef.current.getValue(), 
+            minor: minorRef.current.getValue(),
+            gradDate: gradDateRef.current.getValue(),
+            gpa: gpaRef.current.getValue()
+        }], 'education')
+    }
 
     
 
     return(
         <>
         <div className="container">
-        <span className="prompt-header">{localStorage.getItem('firstName')}</span>
+        <span className="prompt-header">Hey {localStorage.getItem('firstName')}!</span>
+        <span className="prompt-header">Add your education to get started</span>
         <form className="profile-form">
-        <TextInput label="School" ref={schoolRef}></TextInput>
-        <TextInput label="Graduation Date" ref={gradDateRef} phone={true}></TextInput>
-        <TextInput label="Major" ref={majorRef}></TextInput>
-        <TextInput label="Minor (optional)" ref={minorRef}></TextInput>
-        <TextInput label="GPA (optional)" ref={gpaRef}></TextInput>
+        <TextInput label="School" ref={schoolRef} type="text"></TextInput>
+        <TextInput label="Graduation Date" ref={gradDateRef} type="month"></TextInput>
+        <TextInput label="Major" ref={majorRef} type="text"></TextInput>
+        <TextInput label="Minor (optional)" ref={minorRef} type="text"></TextInput>
+        <TextInput label="GPA (optional)" ref={gpaRef} type="text"></TextInput>
         <span className="submit-container">
-        <span className="submit-button">Next</span>
+        <span className="submit-button" onClick={handleSubmit}>Next</span>
         </span>
         </form>
         </div>

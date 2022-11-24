@@ -10,7 +10,6 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { auth, provider, validateBCEmail, writeUserData, dbRef } from './server/index.js';
 import { onValue, child } from 'firebase/database';
 import { signInWithPopup } from 'firebase/auth';
-import { useEffect } from 'react';
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -37,11 +36,11 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/' element={<SignIn signIn={handleSignIn}/>}></Route>
-        <Route exact path='/profile' element={<Profile user={currentUser}/>}></Route>
-        <Route exact path='/education' element={<Education user={currentUser}/>}></Route>
-        <Route exact path='/build' element={<Experience user={currentUser}/>}></Route>
-        <Route exact path='/create' element={<CreateResume user={currentUser}/>}></Route>
-        <Route exact path='/skills' element={<Skills user={currentUser}/>}></Route>
+        <Route exact path='/profile' element={<Profile/>}></Route>
+        <Route exact path='/education' element={<Education/>}></Route>
+        <Route exact path='/build' element={<Experience/>}></Route>
+        <Route exact path='/create' element={<CreateResume/>}></Route>
+        <Route exact path='/skills' element={<Skills/>}></Route>
       </Routes>
     </Router>
   );
