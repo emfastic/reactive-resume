@@ -7,10 +7,15 @@ import comm from "../assets/communication-resume.png"
 import "../sass/layout/signin.scss"
 import { animated, useSpring } from "react-spring";
 import { useScroll } from "react-use-gesture";
+import { useNavigate } from "react-router-dom";
+import { auth, provider, validateBCEmail, writeUserData, dbRef } from '../server/index.js';
+import { onValue, child } from 'firebase/database';
+import { signInWithPopup } from 'firebase/auth';
 
 const resumes = [business, comm, stem, business2]
 
-function SignIn(props) {
+function SignIn() {
+    const navigate = useNavigate();
 
     // used to scroll to end so user knows it's scrollable
     const beg = useRef(null)
@@ -21,8 +26,6 @@ function SignIn(props) {
         setTimeout(() => {end.current.scrollIntoView({behavior: "smooth"})}, 500)
         setTimeout(() => {beg.current.scrollIntoView({behavior: "smooth"})}, 2100)
     }, [])
-
-    
 
     // make sure scroll turn doesn't exceed 30 deg
     const clamp = (value, clampAt = 30) => {
@@ -47,6 +50,27 @@ function SignIn(props) {
         });
     });
 
+    // handle sign in and redirect
+    // TODO: pass user data to other components?
+    function handleSignIn() {
+      signInWithPopup(auth, provider)
+      .then((result) => {
+      
+      // The signed-in user info.
+      const user = result.user;
+  
+      // read data on update; navigate to build if user has account, otherwise navigate to profile to begin signup
+      onValue(child(dbRef, `users/${user.uid}`), snapshot => {
+          if (snapshot.exists()) {
+            navigate("/build")
+          } else if (validateBCEmail(user.email)) {
+              writeUserData(user)
+              navigate("/profile")
+          }
+      })
+      })  
+    }
+
     return (
         <>
         <div className="page-left">
@@ -68,9 +92,9 @@ function SignIn(props) {
         </div>
         </div>
         <div className="page-right">
-        <div onClick={props.signIn} className="signin-button login">Login with Google</div>
+        <div onClick={handleSignIn} className="signin-button login">Login with Google</div>
         <div className="signup-subtext">
-        <span className="text">No account? Sign up with </span><span onClick={props.signIn} className="google">Google</span>
+        <span className="text">No account? Sign up with </span><span onClick={handleSignIn} className="google">Google</span>
         </div>
         </div>
         </>

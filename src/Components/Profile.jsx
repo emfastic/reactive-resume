@@ -1,11 +1,17 @@
-import React, { useRef } from "react";
-import { updateProfile, trackUserData } from "../server/index";
+import React, { useRef, useState } from "react";
+import { updateProfile } from "../server/index";
 import TextInput from "./TextInput";
+import { Navigate } from 'react-router-dom';
 
 function Profile() {
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const phoneNumRef = useRef();
+    const [eduDirect, setEduDirect] = useState(false)
+
+    if (eduDirect) {
+        return <Navigate to="/build"></Navigate>
+    }
 
     function handleProfileSubmit() {
 
@@ -24,6 +30,8 @@ function Profile() {
             localStorage.setItem('phoneNum', phoneNum)
             updateProfile(firstName, lastName, phoneNum);
         }
+
+        setEduDirect(true)
     }
 
     return (

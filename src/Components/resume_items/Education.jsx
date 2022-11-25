@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import TextInput from "../TextInput.jsx";
 import { updateKeyedObjectSection } from "../../server/index.js";
-import profileData from "../Profile"
 
 function Education(props) {
     let schoolRef = useRef(null);
@@ -21,7 +20,6 @@ function Education(props) {
     }
 
     
-
     return(
         <>
         <div className="container">
