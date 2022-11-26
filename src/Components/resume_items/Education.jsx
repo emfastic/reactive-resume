@@ -19,21 +19,23 @@ function Education(props) {
         }], 'education')
     }
 
+    // let box = document.querySelector('.profile-form')
+    // console.log(box.offsetHeight);
     
     return(
         <>
         <div className="container">
         <span className="prompt-header">Hey {localStorage.getItem('firstName')}!</span>
-        <span className="prompt-header">Add your education to get started</span>
+        <span className="prompt-header">Start by adding your education</span>
         <form className="profile-form">
         <TextInput label="School" ref={schoolRef} type="text"></TextInput>
         <TextInput label="Graduation Date" ref={gradDateRef} type="month"></TextInput>
         <TextInput label="Major" ref={majorRef} type="text"></TextInput>
         <TextInput label="Minor (optional)" ref={minorRef} type="text"></TextInput>
         <TextInput label="GPA (optional)" ref={gpaRef} gpa="true" type="text"></TextInput>
-        <span className="submit-container">
+        <div className="submit-container">
         <span className="submit-button" onClick={handleSubmit}>Next</span>
-        </span>
+        </div>
         </form>
         </div>
         </> 

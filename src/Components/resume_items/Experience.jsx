@@ -164,13 +164,27 @@ function Experience() {
 
     return (
         <>
-        <div className="vl"></div>
+        <div className="left-container">
         <div className="container-div">
         <div className="tag-container"><span className="experience-tag">Education</span></div>
         <div className="tag-container"><span className="experience-tag">Experiences</span></div>
         <div className="tag-container"><span className="experience-tag">Skills</span></div>
         <div className="tag-container"><span className="experience-tag">Interests</span></div>
         <span className="generate-button">Generate</span>
+        </div>
+        </div>
+        <div className="right-container">
+        <Education></Education>
+        <div className="current-education">
+        <div className="education-div">
+        <span className="education-item">Test</span>
+        <span className="edit-education-button">Edit</span>
+        </div>
+        <div className="education-div">
+        <span className="education-item">Test2</span>
+        <span className="edit-education-button">Edit2</span>
+        </div>
+        </div>
         </div>
         </>
     )
