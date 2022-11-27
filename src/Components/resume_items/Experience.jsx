@@ -3,7 +3,7 @@ import { updateKeyedObjectSection } from "../../server/index.js"
 import ExperienceDesc from "./ExperienceDesc.jsx"
 import TextInput from "../TextInput.jsx"
 import Education from "./Education.jsx"
-import "../../sass/layout/experience.scss"
+import "../../sass/layout/education.scss"
 
 function Experience() {
     let organizationRef = useRef()
@@ -145,49 +145,28 @@ function Experience() {
     // let box = document.querySelector('.experience-tag')
     // console.log(box.offsetWidth);
 
-    // <div>
-    //     <TextInput label="Position Title" ref={titleRef}></TextInput>
-    //     <TextInput label="Organization" ref={organizationRef}></TextInput>
-    //     </div>
-    //     <div>
-    //     <TextInput label="Location" ref={locationRef}></TextInput>
-    //     <TextInput label="Start Date" ref={startDateRef}></TextInput>
-    //     <TextInput label="End Date" ref={endDateRef}></TextInput>
-    //     </div>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(0, setArray, bulletArray)}} addDesc={() => {showBullet(0, setArray, bulletArray)}} idx={0} shown={true}></ExperienceDesc>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(1, setArray, bulletArray)}} addDesc={() => {showBullet(1, setArray, bulletArray)}} idx={1} shown={show1}></ExperienceDesc>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(2, setArray, bulletArray)}} addDesc={() => {showBullet(2, setArray, bulletArray)}} idx={2} shown={show2}></ExperienceDesc>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(3, setArray, bulletArray)}} addDesc={() => {showBullet(3, setArray, bulletArray)}} idx={3} shown={show3}></ExperienceDesc>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(4, setArray, bulletArray)}} addDesc={() => {showBullet(4, setArray, bulletArray)}} idx={4} shown={show4}></ExperienceDesc>
-    //     <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(5, setArray, bulletArray)}} addDesc={() => {showBullet(5, setArray, bulletArray)}} idx={5} shown={show5}></ExperienceDesc>
-    //     <button onClick={handleExperienceSubmit}>Update Experiences</button>
+    
 
     return (
         <>
-        <div className="left-container">
-        <div className="container-div">
-        <div className="tag-container"><span className="experience-tag">Education</span></div>
-        <div className="tag-container"><span className="experience-tag">Experiences</span></div>
-        <div className="tag-container"><span className="experience-tag">Skills</span></div>
-        <div className="tag-container"><span className="experience-tag">Interests</span></div>
-        <span className="generate-button">Generate</span>
+        <div>
+        <TextInput label="Position Title" ref={titleRef}></TextInput>
+        <TextInput label="Organization" ref={organizationRef}></TextInput>
         </div>
+        <div>
+        <TextInput label="Location" ref={locationRef}></TextInput>
+        <TextInput label="Start Date" ref={startDateRef}></TextInput>
+        <TextInput label="End Date" ref={endDateRef}></TextInput>
         </div>
-        <div className="right-container">
-        <Education></Education>
-        <div className="current-education">
-        <div className="education-div">
-        <span className="education-item">Test</span>
-        <span className="edit-education-button">Edit</span>
-        </div>
-        <div className="education-div">
-        <span className="education-item">Test2</span>
-        <span className="edit-education-button">Edit2</span>
-        </div>
-        </div>
-        </div>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(0, setArray, bulletArray)}} addDesc={() => {showBullet(0, setArray, bulletArray)}} idx={0} shown={true}></ExperienceDesc>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(1, setArray, bulletArray)}} addDesc={() => {showBullet(1, setArray, bulletArray)}} idx={1} shown={show1}></ExperienceDesc>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(2, setArray, bulletArray)}} addDesc={() => {showBullet(2, setArray, bulletArray)}} idx={2} shown={show2}></ExperienceDesc>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(3, setArray, bulletArray)}} addDesc={() => {showBullet(3, setArray, bulletArray)}} idx={3} shown={show3}></ExperienceDesc>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(4, setArray, bulletArray)}} addDesc={() => {showBullet(4, setArray, bulletArray)}} idx={4} shown={show4}></ExperienceDesc>
+        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(5, setArray, bulletArray)}} addDesc={() => {showBullet(5, setArray, bulletArray)}} idx={5} shown={show5}></ExperienceDesc>
+        <button onClick={handleExperienceSubmit}>Update Experiences</button>
         </>
     )
 }
 
-export default Experience
+export default Experience;
