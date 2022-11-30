@@ -33,7 +33,7 @@ function Education(props) {
         <TextInput label="Graduation Date" ref={gradDateRef} type="month"></TextInput>
         <TextInput label="Major" ref={majorRef} type="text"></TextInput>
         <TextInput label="Minor (optional)" ref={minorRef} type="text"></TextInput>
-        <TextInput label="GPA (optional)" ref={gpaRef} gpa="true" type="text"></TextInput>
+        <TextInput label="GPA (optional)" ref={gpaRef} type="text"></TextInput>
         <div className="submit-container">
         <span className="submit-button" onClick={handleSubmit}>Add</span>
         </div>

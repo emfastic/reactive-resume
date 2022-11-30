@@ -49,10 +49,13 @@ const TextInput = forwardRef((props, _ref) => {
     }
   }))
 
+  // input : props.type === "month" ? "month-text-input" : "text-input"
+  //label : || props.type === "month" ? "month" : ""
+
   return (
     <span className="input-container">
-      <input className={props.type === "month" ? "month-text-input" : "text-input"} value={value} type={props.type} min={props.type === "month" ? "1940-01" : ""} onChange={handleChange}/>
-      <label className={value && "filled" || props.type === "month" ? "month" : ""}>
+      <input className="small-text" value={value} type={props.type} min={props.type === "month" ? "1940-01" : ""} onChange={handleChange}/>
+      <label className={value && "filled"}>
         {props.label}
       </label>
     </span>
