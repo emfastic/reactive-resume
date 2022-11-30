@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { handleSignIn } from '../server/index'
+// import { handleSignIn } from '../server/index'
 import stem from "../assets/stem-resume.png"
 import business from "../assets/business-resume.png"
 import business2 from "../assets/business-resume2.png"
@@ -7,10 +7,14 @@ import comm from "../assets/communication-resume.png"
 import "../sass/layout/signin.scss"
 import { animated, useSpring } from "react-spring";
 import { useScroll } from "react-use-gesture";
+import { useNavigate } from "react-router-dom";
 
 const resumes = [business, comm, stem, business2]
 
-function SignIn() {
+function SignIn(props) {
+    const navigate = useNavigate();
+
+    props.passUpwards({profile: () => navigate("/profile"), build: () => navigate("/build")})
 
     // used to scroll to end so user knows it's scrollable
     const beg = useRef(null)
@@ -21,8 +25,6 @@ function SignIn() {
         setTimeout(() => {end.current.scrollIntoView({behavior: "smooth"})}, 500)
         setTimeout(() => {beg.current.scrollIntoView({behavior: "smooth"})}, 2100)
     }, [])
-
-    
 
     // make sure scroll turn doesn't exceed 30 deg
     const clamp = (value, clampAt = 30) => {
@@ -47,6 +49,10 @@ function SignIn() {
         });
     });
 
+    // handle sign in and redirect
+    // TODO: pass user data to other components?
+    
+
     return (
         <>
         <div className="page-left">
@@ -68,9 +74,9 @@ function SignIn() {
         </div>
         </div>
         <div className="page-right">
-        <div onClick={handleSignIn} className="signin-button login">Login with Google</div>
+        <div onClick={props.handleSignIn} className="signin-button login">Login with Google</div>
         <div className="signup-subtext">
-        <span className="text">No account? Sign up with </span><span onClick={handleSignIn} className="google">Google</span>
+        <span className="text">No account? Sign up with </span><span onClick={props.handleSignIn} className="google">Google</span>
         </div>
         </div>
         </>

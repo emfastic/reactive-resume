@@ -1,0 +1,66 @@
+@import "../utilities/variables";
+
+* {
+    font-family: "lucida";
+}
+
+.current-education {
+    // background-color: blue;
+    left: 68%;
+    position: absolute;
+    top: 55%;
+    width: 63%;
+    height: 503px;
+    transform: translate(-50%, -50%);
+}
+
+.education-item {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: $light-lavender;
+    padding: 8px 12px;
+    font-size: 24px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.remove-education-button {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: $midnight-blue;
+    margin-left: 10px;
+    color: $light-lavender;
+    padding: 8px 8px;
+    font-size: 14px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.education-div {
+    position: relative;
+    background-color: aqua;
+    margin-bottom: 15px;
+}
+
+.current-education-header {
+    position: absolute;
+    left: 50%;
+    // background-color: green;
+    top: 0%;
+    transform: translate(-50%, -140%);
+    font-size: 48px;
+    text-align: center;
+}
+
+.container-div {
+    position: absolute;
+    // background-color: green;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0px 30px 0px 0px;
+}

@@ -1,0 +1,17 @@
+@import "../utilities/variables";
+
+.left-container {
+    left: 0px;
+    width: 21%;
+    height: 100%;
+    position: fixed;
+    border-right: 1px solid $light-lavender;
+}
+
+.right-container {
+    right: 0px;
+    width: 79%;
+    height: 100%;
+    position: fixed;
+    // background-color: orange;
+}

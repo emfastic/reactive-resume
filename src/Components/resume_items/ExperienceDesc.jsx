@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../sass/layout/education.scss"
 
 function ExperienceDesc(props) {
 
