@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import "../sass/layout/profile.scss";
 
-const TextInput = forwardRef((props, _ref) => {
+const TextArea = forwardRef((props, _ref) => {
   const [value, setValue] = useState('');
 
   function handleChange(e) {
@@ -54,12 +54,12 @@ const TextInput = forwardRef((props, _ref) => {
 
   return (
     <span className={props.className}>
-      <input className={props.className} value={value} type={props.type} min={props.type === "month" ? "1940-01" : ""} onChange={handleChange}/>
-      <label className={props.type === "month" ? "month" : value && "filled"}>
+      <textarea className={props.className} value={value} onChange={handleChange}/>
+      <label className={value ? "filled area" : "area"}>
         {props.label}
       </label>
     </span>
   )
 });
 
-export default TextInput;
+export default TextArea;

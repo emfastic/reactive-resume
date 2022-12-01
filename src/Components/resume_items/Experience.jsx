@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react"
 import { updateKeyedObjectSection } from "../../server/index.js"
-import ExperienceDesc from "./ExperienceDesc.jsx"
 import TextInput from "../TextInput.jsx"
-import Education from "./Education.jsx"
-import "../../sass/layout/education.scss"
+import "../../sass/layout/experience.scss"
+import TextArea from "../TextArea.jsx"
 
 function Experience() {
     let organizationRef = useRef()
@@ -153,15 +152,15 @@ function Experience() {
     // <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(5, setArray, bulletArray)}} addDesc={() => {showBullet(5, setArray, bulletArray)}} idx={5} shown={show5}></ExperienceDesc>
     
     // <div className="current-education">
-    // <div className="education-div">
+    // <div className="item-div">
     // <div className="current-education-header">Education History</div>
     // <div className="education-item">University of Washington, BA, Computer Science and Finance</div>
     // <div className="remove-education-button">X</div>
     // </div>
-    // <div className="education-div">
+    // <div className="item-div">
     // <span className="education-item">Test2</span>
     // </div>
-    // <div className="education-div">
+    // <div className="item-div">
     // <div className="education-item">Test3</div>
     // </div>
     // <button onClick={handleExperienceSubmit}>Update Experiences</button>
@@ -171,13 +170,60 @@ function Experience() {
 
     return (
         <>
-        <TextInput className="small-text" label="Position Title" ref={titleRef}></TextInput>
-        <TextInput className="small-text" label="Organization" ref={organizationRef}></TextInput>
-        <br/>
-        <TextInput className="small-text" label="Location" ref={locationRef}></TextInput>
-        <TextInput className="small-text month" label="Start Date" ref={startDateRef} type="month"></TextInput>
+        <form className="experience-form">
+        <TextInput className="small-input" label="Organization" ref={organizationRef}></TextInput>
+        <TextInput className="small-input" label="Position Title" ref={titleRef}></TextInput>
+        <TextInput className="small-input" label="Location" ref={locationRef}></TextInput>
+        <TextInput className="small-input month" label="Start" ref={startDateRef} type="month"></TextInput>
+        <TextInput className="small-input month" label="End (blank if current role)" ref={startDateRef} type="month"></TextInput>
+        <TextArea className="text-container" label="Description"></TextArea>
         <div className="submit-container">
         <span className="submit-button">Add</span>
+        </div>
+        </form>
+        <div className="current-education-header">Experience History</div>
+        <div className="current-experiences">
+        <div className="item-div">
+        <div className="experience-item">Best Buy, Sales Advisor, Cleveland, June 2019 - January 2022</div>
+        <div className="remove-education-button">X</div>
+        </div>
+        <div className="item-div">
+        <span className="experience-item">Test2</span>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>  
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
+        <div className="item-div">
+        <div className="experience-item">Test3</div>
+        </div>
         </div>
         </>
     )

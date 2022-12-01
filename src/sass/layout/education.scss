@@ -6,12 +6,13 @@
 
 .current-education {
     // background-color: blue;
-    left: 68%;
+    left: 70%;
     position: absolute;
     top: 55%;
     width: 63%;
     height: 503px;
     transform: translate(-50%, -50%);
+    overflow: auto;
 }
 
 .education-item {
@@ -24,6 +25,17 @@
     &:hover {
         cursor: pointer;
     }
+}
+
+.education-form {
+    // max-width: 340px;
+    position: absolute;
+    top: 55%;
+    transform: translate(-25%, -50%);
+    left: 12.5%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
 }
 
 .remove-education-button {
@@ -41,19 +53,20 @@
     }
 }
 
-.education-div {
+.item-div {
     position: relative;
-    background-color: aqua;
+    // background-color: aqua;
     margin-bottom: 15px;
 }
 
 .current-education-header {
     position: absolute;
-    left: 50%;
+    left: 70%;
     // background-color: green;
-    top: 0%;
-    transform: translate(-50%, -140%);
-    font-size: 48px;
+    white-space: nowrap;
+    top: 5%;
+    transform: translate(-50%, 10%);
+    font-size: 64px;
     text-align: center;
 }
 
