@@ -22,8 +22,6 @@ function Education(props) {
 
     // let box = document.querySelector('.profile-form')
     // console.log(box.offsetHeight);
-    // <span className="prompt-header">Hey {localStorage.getItem('firstName')}!</span>
-    //     <span className="prompt-header">Start by adding your education</span>
     
     return(
         <>

@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child, update, push, onValue } from "firebase/database"
+import { getDatabase, ref, set, child, update, push, onValue } from "firebase/database"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -59,36 +59,6 @@ function handleSignIn() {
     })
     })
 }
-    
-    // Assess whether user exists or not; if he does not exist then create account if valid email domain
-    // get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //         let value = snapshot.val();
-    //         console.log(value.experiences[Object.keys(value.experiences)[0]])
-    //         // return "exists"
-    //     } else {
-    //         // if valid email given; create new user and send to profile creation page
-    //         // otherwise, return that it's an invalid email
-    //         if (validateBCEmail(user.email)) {
-    //             writeUserData(user)
-    //             // return "new user"
-    //         }
-
-    //         // return "invalid email"
-    //     }
-    // })
-    // }).catch((error) => {
-    // // Handle login error
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
-    // const userEmail = error.customData.email;
-    
-    // // TODO: Redirect to error page
-    // console.log('user:', userEmail)
-    // console.log('error code:', errorCode);
-    // console.log('error message:', errorMessage);
-    // });
-// }
 
 /* Update the user's profile to contain a first name, last name, phone number, alt email, and website to be used on resume */
 function updateProfile(firstName, lastName, phoneNumber) {

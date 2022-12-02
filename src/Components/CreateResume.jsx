@@ -7,15 +7,15 @@ import { trackUserData } from "../server/index.js";
 function CreateResume() {
 
     // state to manage if click has happened so onval only triggered once
-    const [onVal, setOnVal] = useState(false);
+    // const [onVal, setOnVal] = useState(false);
 
-    // ensure onValue is only triggered once
-    function handleClick() {
-      if (!onVal) {
-        trackUserData();
-      }
-      setOnVal(true);
-    }
+    // // ensure onValue is only triggered once
+    // function handleClick() {
+    //   if (!onVal) {
+    //     trackUserData();
+    //   }
+    //   setOnVal(true);
+    // }
     
     function generate() {
         const documentCreator = new DocumentCreatorTest();
