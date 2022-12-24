@@ -96,10 +96,14 @@ function updateStandardObjectSection(array, endpoint) {
     })
 }
 
+function updateExperience(endpoint, key, item) {
+    update(ref(db, `users/${auth.currentUser.uid}/${endpoint}/${key}`), item)
+}
+
 function removeData(endpoint, key) {
     remove(ref(db, `users/${auth.currentUser.uid}/${endpoint}/${key}`))
 }
 
 
 
-export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, auth, provider, validateBCEmail, writeUserData, dbRef, removeData };
+export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, updateExperience, auth, provider, validateBCEmail, writeUserData, dbRef, removeData };

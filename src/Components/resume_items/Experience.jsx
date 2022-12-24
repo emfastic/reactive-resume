@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { updateKeyedObjectSection } from "../../server/index.js"
+import { updateKeyedObjectSection, updateExperience } from "../../server/index.js"
 import TextInput from "../TextInput.jsx"
 import "../../sass/layout/experience.scss"
 import TextArea from "../TextArea.jsx"
@@ -12,6 +12,8 @@ function Experience(props) {
     let startDateRef = useRef()
     let endDateRef= useRef()
     let descriptionRef = useRef()
+    const [edit, setEdit] = useState(false)
+    const [key, setKey] = useState()
 
     // Need to update based on text area
     function convertDescsToCSV() {
@@ -55,6 +57,32 @@ function Experience(props) {
         startDateRef.current.setValue(experienceData.startDate)
         endDateRef.current.setValue(experienceData.endDate)
         descriptionRef.current.setValue(convertCSVtoDescription(experienceData.description))
+        setEdit(true)
+        setKey(experienceData.key)
+    }
+
+    function handleExperienceUpdate() {
+        let experience = {
+            organization: organizationRef.current.getValue(),
+            title: titleRef.current.getValue(),
+            location: locationRef.current.getValue(),
+            startDate: startDateRef.current.getValue(),
+            endDate: endDateRef.current.getValue(),
+            description: convertDescsToCSV()
+        }
+        updateExperience('experiences', key, experience)
+        handleBack()
+    }
+
+    function handleBack() {
+        organizationRef.current.setValue('')
+        titleRef.current.setValue('')
+        locationRef.current.setValue('')
+        startDateRef.current.setValue('')
+        endDateRef.current.setValue('')
+        descriptionRef.current.setValue('')
+        setEdit(false)
+        setKey('')
     }
 
     let experienceEntries = []
@@ -85,7 +113,8 @@ function Experience(props) {
         <TextInput className="small-input month" label="End (blank if current role)" ref={endDateRef} type="month"></TextInput>
         <TextArea className="text-container" label="Description" ref={descriptionRef}></TextArea>
         <div className="submit-container">
-        <span className="submit-button" onClick={handleExperienceSubmit}>Add</span>
+        {edit ? <span className="submit-button left" onClick={handleBack}>Back</span> : ''}
+        {edit ? <span className="submit-button" onClick={handleExperienceUpdate}>Edit</span> : <span className="submit-button" onClick={handleExperienceSubmit}>Add</span>}
         </div>
         </form>
         <div className="current-education-header">Experience History</div>

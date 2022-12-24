@@ -16,16 +16,19 @@
 }
 
 .submit-container {
-    display: flex;
-    justify-content: right;
     .submit-button {
         background-color: $midnight-blue;
         padding: 10px 20px 10px 20px;
         border-radius: 12px;
         color: $light-lavender;
         font-size: 24px;
+        float: right;
         &:hover {
             cursor: pointer;
+        }
+
+        &.left {
+            float:left
         }
     }
 }
