@@ -74,7 +74,7 @@ function SignIn(props) {
         </div>
         </div>
         <div className="page-right">
-        <div onClick={props.handleSignIn} className="signin-button login">Login with Google</div>
+        <div onClick={props.handleSignIn} className="signin-button login">Continue with Google</div>
         <div className="signup-subtext">
         <span className="text">No account? Sign up with </span><span onClick={props.handleSignIn} className="google">Google</span>
         </div>

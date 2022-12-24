@@ -1,5 +1,6 @@
 import React from "react";
 import "../sass/layout/navbar.scss"
+import CreateResume from "./CreateResume";
 
 function NavBar(props) {
 

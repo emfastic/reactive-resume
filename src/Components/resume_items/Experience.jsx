@@ -3,8 +3,9 @@ import { updateKeyedObjectSection } from "../../server/index.js"
 import TextInput from "../TextInput.jsx"
 import "../../sass/layout/experience.scss"
 import TextArea from "../TextArea.jsx"
+import HistoryItem from "../HistoryItem.jsx"
 
-function Experience() {
+function Experience(props) {
     let organizationRef = useRef()
     let titleRef= useRef()
     let locationRef = useRef()
@@ -13,21 +14,16 @@ function Experience() {
     let descriptionRef = useRef()
 
     // Need to update based on text area
-    function convertDescsToCSV(valObjArray) {
-        let description = ''
+    function convertDescsToCSV() {
 
-        // Iterate through each description appending it to desc, separated by comma with no space
-        // If user didn't capitalize the first word of desc capitalize it
-        // If user has leading or trailing whitespace trim it
-        valObjArray.forEach(element => {
-            let descBullet = element.description.trim()
-            description += descBullet.charAt(0).toUpperCase() + descBullet.slice(1) + ','
+        let descriptionStr = descriptionRef.current.getValue().replaceAll('\u2022 ', '').trim()
+        let descriptionArray = descriptionStr.split('\n\n')
+
+        descriptionArray.forEach((element, idx) => {
+            descriptionArray[idx] = element.charAt(0).toUpperCase() + element.slice(1)
         })
 
-        // Remove last comma bc it is unnecessary
-        description = description.slice(0, -1)
-
-        return description
+        return descriptionArray.join(',')
     }
 
     function handleExperienceSubmit() {
@@ -38,9 +34,43 @@ function Experience() {
             location: locationRef.current.getValue(),
             startDate: startDateRef.current.getValue(),
             endDate: endDateRef.current.getValue(),
-            description: convertDescsToCSV(descriptionRef.current.getValue())
-        }, 'experiences'])
+            description: convertDescsToCSV()
+        }], 'experiences')
     }
+
+    function convertCSVtoDescription(description) {
+        let descriptionArray = description.split(',')
+        description = ''
+        descriptionArray.forEach( descriptionBullet => {
+            description += `\u2022 ${descriptionBullet}\n\n`
+    })
+
+        return description
+    }
+
+    function handleEdit(experienceData) {
+        organizationRef.current.setValue(experienceData.organization)
+        titleRef.current.setValue(experienceData.title)
+        locationRef.current.setValue(experienceData.location)
+        startDateRef.current.setValue(experienceData.startDate)
+        endDateRef.current.setValue(experienceData.endDate)
+        descriptionRef.current.setValue(convertCSVtoDescription(experienceData.description))
+    }
+
+    let experienceEntries = []
+    
+    if (props.user.experiences !== undefined) {
+        for (const [key, value] of Object.entries(props.user.experiences)) {
+            value.key = key
+            experienceEntries.push(value)
+        }
+    }
+
+    const currentExperiences = experienceEntries.map(entry => {
+        return <HistoryItem entry={entry} handleEdit={handleEdit} key={entry.key} type="experience"/>
+    })
+
+    // console.log(experienceEntries)
 
     // let box = document.querySelector('.experience-tag')
     // console.log(box.offsetWidth);
@@ -52,54 +82,15 @@ function Experience() {
         <TextInput className="small-input" label="Position Title" ref={titleRef}></TextInput>
         <TextInput className="small-input" label="Location" ref={locationRef}></TextInput>
         <TextInput className="small-input month" label="Start" ref={startDateRef} type="month"></TextInput>
-        <TextInput className="small-input month" label="End (blank if current role)" ref={startDateRef} type="month"></TextInput>
+        <TextInput className="small-input month" label="End (blank if current role)" ref={endDateRef} type="month"></TextInput>
         <TextArea className="text-container" label="Description" ref={descriptionRef}></TextArea>
         <div className="submit-container">
-        <span className="submit-button">Add</span>
+        <span className="submit-button" onClick={handleExperienceSubmit}>Add</span>
         </div>
         </form>
         <div className="current-education-header">Experience History</div>
         <div className="current-experiences">
-        <div className="item-div">
-        <div className="experience-item">Best Buy, Sales Advisor, Cleveland, June 2019 - January 2022</div>
-        <div className="remove-education-button">X</div>
-        </div>
-        <div className="item-div">
-        <span className="experience-item">Test2</span>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>  
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
-        <div className="item-div">
-        <div className="experience-item">Test3</div>
-        </div>
+        {currentExperiences}
         </div>
         </>
     )

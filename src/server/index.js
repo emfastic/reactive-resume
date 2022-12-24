@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, child, update, push, onValue } from "firebase/database"
+import { getDatabase, ref, set, child, update, push, onValue, remove } from "firebase/database"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -96,18 +96,10 @@ function updateStandardObjectSection(array, endpoint) {
     })
 }
 
-/* trigger onValue event on create resume page to make sure data is current */
-function trackUserData() {
-    if (auth.currentUser === null) {
-        return
-    }
-
-    onValue(child(dbRef, `users/${auth.currentUser.uid}`), snapshot => {
-        // update state in here
-        return snapshot.val()
-    })
+function removeData(endpoint, key) {
+    remove(ref(db, `users/${auth.currentUser.uid}/${endpoint}/${key}`))
 }
 
 
 
-export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, trackUserData, auth, provider, validateBCEmail, writeUserData, dbRef };
+export { handleSignIn, updateProfile, updateKeyedObjectSection, updateStandardObjectSection, auth, provider, validateBCEmail, writeUserData, dbRef, removeData };

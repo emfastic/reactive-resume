@@ -4,12 +4,12 @@ import Education from "./resume_items/Education";
 import Experience from "./resume_items/Experience";
 import "../sass/layout/build.scss"
 
-function Build() {
+function Build(props) {
     const [buildState, setBuildState] = useState("experiences")
     
     const buildObject = {
-        education: <Education/>,
-        experiences: <Experience/>,
+        education: <Education user={props.user}/>,
+        experiences: <Experience user={props.user}/>,
         skills: "skills",
         interests: "interests"
     }

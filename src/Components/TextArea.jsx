@@ -4,26 +4,29 @@ import "../sass/layout/profile.scss";
 const TextArea = forwardRef((props, _ref) => {
   const [value, setValue] = useState('\u2022 ');
 
-  function handleChange(e) {
-    if (e.code === 'Enter') {
-      console.log('enter')
-      e.target.value = e.target.value + "\n\n\u2022 "
-    } else {
-      if (e.target.value[e.target.value.length - 1] === '\n') {
-        e.target.value = e.target.value.substring(0, e.target.value.length - 1)
-        setValue(e.target.value);
-      } else {
-        setValue(e.target.value);
-      }
+  function handleChange(event) {
+      // Get the current value of the input box
+    let currVal = event.target.value
+
+    // Check if the user has pressed the return key
+    if (event.key === 'Enter') {
+      // Add two new lines and a bullet and a space to the value
+      const newValue = `${currVal}\n\n• `;
+
+      // Update the value of the input box
+      event.target.value = newValue;
+      event.target.value = event.target.value.substring(0, event.target.value.length - 1)
     }
-    e.target.value = e.target.value.replace(/\n/g,"\n\u2022").replace(/\r/g,"\r\u2022")
-    setValue(e.target.value)
-  }
+    setValue(event.target.value)
+}
 
   // used to pass value upwards to parent
   useImperativeHandle(_ref, () => ({
     getValue: () => {
       return value;
+    },
+    setValue: description => {
+      setValue(description)
     }
   }))
 

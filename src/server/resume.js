@@ -94,8 +94,6 @@ const education = {
 const skills = {0: 'python', 1: 'java', 2: 'german'}
 
 export class DocumentCreatorTest {
-    
-
     create([profileInfo, education1, skills]) {
         const document = new Document({
             numbering: {

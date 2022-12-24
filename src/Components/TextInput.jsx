@@ -46,6 +46,9 @@ const TextInput = forwardRef((props, _ref) => {
   useImperativeHandle(_ref, () => ({
     getValue: () => {
       return value;
+    },
+    setValue: editValue => {
+      setValue(editValue)
     }
   }))
 
