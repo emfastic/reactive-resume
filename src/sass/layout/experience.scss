@@ -34,6 +34,19 @@
     gap: 14px;
 }
 
+.tag {
+    position: absolute;
+    left: 24%;
+    top: 24%;
+    height: 61px;
+    // padding: 13px 25px 10px 10px;
+    font-size: 18px;
+    border-radius: 22px;
+    // outline: solid;
+    outline-color: $midnight-blue;
+    outline-width: .3vmin;
+}
+
 span.small-input {
     position: relative;
     
@@ -46,7 +59,7 @@ span.small-input {
         border-radius: 24px;
         border: none;
         // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
-        padding: 13px 21px 0px;
+        padding: 13px 15px 0px;
         line-height: 1;
         outline: none;
         box-shadow: none;
@@ -61,6 +74,77 @@ span.small-input {
         }
     }
 
+    label {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(0px, 20px) scale(1);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 24px;
+        line-height: 1;
+        // make equal to padding in input
+        left: 21px;
+
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+    
+    label.month {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(-6px, 9px) scale(0.8);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 18px;
+        white-space: nowrap;
+    
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+
+    &:focus-within label {
+        transform: translate(-6px, 9px) scale(0.8);
+        color: $midnight-blue;
+        font-size: 18px;
+    }
+}
+
+span.small-input-2 {
+    position: relative;
+    left: 23%;
+    top: 34.56%;
+    
+    input {
+        font-size: 20px;
+        margin-right: 20px;
+        // margin-bottom: 20px;
+    
+        height: 48px;
+        border-radius: 24px;
+        border: none;
+        // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
+        padding: 13px 15px 0px;
+        line-height: 1;
+        outline: none;
+        box-shadow: none;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background-color: white;
+        outline: solid;
+        outline-color: $midnight-blue;
+        outline-width: .3vmin;
+    
+        &:focus {
+            box-shadow: 0 0 8px 8px $light-lavender;
+        }
+    }
 
     label {
         position: absolute;

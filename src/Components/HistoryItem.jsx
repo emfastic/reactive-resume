@@ -7,6 +7,7 @@ function HistoryItem(props) {
     return (props.type === "experience" ?
     <div className="item-div">
     <div className="experience-item" onClick={() => {props.handleEdit(props.entry)}}>{props.entry.organization}, {props.entry.title}, {props.entry.location}, {props.entry.startDate} - {props.entry.endDate}</div>
+    <div className="experience-item">{props.entry.section}</div>
     <div className="remove-education-button" onClick={() => {removeData('experiences', props.entry.key)}}>X</div>
     </div>
     :

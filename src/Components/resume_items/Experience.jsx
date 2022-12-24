@@ -36,7 +36,8 @@ function Experience(props) {
             location: locationRef.current.getValue(),
             startDate: startDateRef.current.getValue(),
             endDate: endDateRef.current.getValue(),
-            description: convertDescsToCSV()
+            description: convertDescsToCSV(),
+            section: document.getElementsByClassName('tag')[0].value
         }], 'experiences')
     }
 
@@ -57,6 +58,7 @@ function Experience(props) {
         startDateRef.current.setValue(experienceData.startDate)
         endDateRef.current.setValue(experienceData.endDate)
         descriptionRef.current.setValue(convertCSVtoDescription(experienceData.description))
+        document.getElementsByClassName('tag')[0].value = experienceData.section
         setEdit(true)
         setKey(experienceData.key)
     }
@@ -68,7 +70,8 @@ function Experience(props) {
             location: locationRef.current.getValue(),
             startDate: startDateRef.current.getValue(),
             endDate: endDateRef.current.getValue(),
-            description: convertDescsToCSV()
+            description: convertDescsToCSV(),
+            section: document.getElementsByClassName('tag')[0].value
         }
         updateExperience('experiences', key, experience)
         handleBack()
@@ -81,6 +84,7 @@ function Experience(props) {
         startDateRef.current.setValue('')
         endDateRef.current.setValue('')
         descriptionRef.current.setValue('')
+        document.getElementsByClassName('tag')[0].value = 'Work'
         setEdit(false)
         setKey('')
     }
@@ -100,8 +104,8 @@ function Experience(props) {
 
     // console.log(experienceEntries)
 
-    // let box = document.querySelector('.experience-tag')
-    // console.log(box.offsetWidth);
+    let box = document.querySelector('.small-input')
+    console.log(box.offsetHeight);
 
     return (
         <>
@@ -110,13 +114,18 @@ function Experience(props) {
         <TextInput className="small-input" label="Position Title" ref={titleRef}></TextInput>
         <TextInput className="small-input" label="Location" ref={locationRef}></TextInput>
         <TextInput className="small-input month" label="Start" ref={startDateRef} type="month"></TextInput>
-        <TextInput className="small-input month" label="End (blank if current role)" ref={endDateRef} type="month"></TextInput>
         <TextArea className="text-container" label="Description" ref={descriptionRef}></TextArea>
         <div className="submit-container">
         {edit ? <span className="submit-button left" onClick={handleBack}>Back</span> : ''}
         {edit ? <span className="submit-button" onClick={handleExperienceUpdate}>Edit</span> : <span className="submit-button" onClick={handleExperienceSubmit}>Add</span>}
         </div>
         </form>
+        <TextInput className="small-input-2 month" label="End (blank if current role)" ref={endDateRef} type="month"></TextInput>
+        <select className='tag'>
+            <option value="Work">Work</option>
+            <option value="Research">Research</option>
+            <option value="Extracurricular">Extracurricular</option>
+        </select>
         <div className="current-education-header">Experience History</div>
         <div className="current-experiences">
         {currentExperiences}
