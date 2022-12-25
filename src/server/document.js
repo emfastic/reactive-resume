@@ -1,22 +1,29 @@
 import docx from "docx";
 const {
-    AlignmentType,
-    Document,
-    HeadingLevel,
-    Packer,
-    Paragraph,
-    TabStopPosition,
-    TabStopType,
-    TextRun
-  } = docx;
+  AlignmentType,
+  Document,
+  HeadingLevel,
+  Packer,
+  Paragraph,
+  TabStopPosition,
+  TabStopType,
+  TextRun,
+} = docx;
 
-const firstName = 'Jake'
-const lastName = 'Ottiger'
-const phoneNumber = '1234567890'
-const email = 'ottigerj@bc.edu'
-const location = 'Chestnut Hill, MA'
-const education = {school: 'Boston College', secSchool: 'Wallace E. Carroll School of Management', major: 'Computer Science and Finance', minor: 'Philosophy', gradDate: 'May 2025', gpa: '4.0'}
-const skills = {0: 'python', 1: 'java', 2: 'german'}
+const firstName = "Jake";
+const lastName = "Ottiger";
+const phoneNumber = "1234567890";
+const email = "ottigerj@bc.edu";
+const location = "Chestnut Hill, MA";
+const education = {
+  school: "Boston College",
+  secSchool: "Wallace E. Carroll School of Management",
+  major: "Computer Science and Finance",
+  minor: "Philosophy",
+  gradDate: "May 2025",
+  gpa: "4.0",
+};
+const skills = { 0: "python", 1: "java", 2: "german" };
 
 export class DocumentCreator {
   // tslint:disable-next-line: typedef
@@ -27,12 +34,12 @@ export class DocumentCreator {
           children: [
             new Paragraph({
               text: "Dolan Miu",
-              heading: HeadingLevel.TITLE
+              heading: HeadingLevel.TITLE,
             }),
             this.createContactInfo(PHONE_NUMBER, PROFILE_URL, EMAIL),
             this.createHeading("Education"),
             ...educations
-              .map(education => {
+              .map((education) => {
                 const arr = [];
                 arr.push(
                   this.createInstitutionHeader(
@@ -49,7 +56,7 @@ export class DocumentCreator {
                 const bulletPoints = this.splitParagraphIntoBullets(
                   education.notes
                 );
-                bulletPoints.forEach(bulletPoint => {
+                bulletPoints.forEach((bulletPoint) => {
                   arr.push(this.createBullet(bulletPoint));
                 });
 
@@ -58,7 +65,7 @@ export class DocumentCreator {
               .reduce((prev, curr) => prev.concat(curr), []),
             this.createHeading("Experience"),
             ...experiences
-              .map(position => {
+              .map((position) => {
                 const arr = [];
 
                 arr.push(
@@ -77,7 +84,7 @@ export class DocumentCreator {
                   position.summary
                 );
 
-                bulletPoints.forEach(bulletPoint => {
+                bulletPoints.forEach((bulletPoint) => {
                   arr.push(this.createBullet(bulletPoint));
                 });
 
@@ -99,23 +106,18 @@ export class DocumentCreator {
             ),
             new Paragraph("More references upon request"),
             new Paragraph({
-              text:
-                "This CV was generated in real-time based on my Linked-In profile from my personal website www.dolan.bio.",
-              alignment: AlignmentType.CENTER
-            })
-          ]
-        }
-      ]
+              text: "This CV was generated in real-time based on my Linked-In profile from my personal website www.dolan.bio.",
+              alignment: AlignmentType.CENTER,
+            }),
+          ],
+        },
+      ],
     });
 
     return document;
   }
 
-  createContactInfo(
-    phoneNumber,
-    profileUrl,
-    email
-  ) {
+  createContactInfo(phoneNumber, profileUrl, email) {
     return new Paragraph({
       alignment: AlignmentType.CENTER,
       children: [
@@ -124,9 +126,9 @@ export class DocumentCreator {
         ),
         new TextRun({
           text: "Address: 58 Elm Avenue, Kent ME4 6ER, UK",
-          break: 1
-        })
-      ]
+          break: 1,
+        }),
+      ],
     });
   }
 
@@ -134,38 +136,35 @@ export class DocumentCreator {
     return new Paragraph({
       text: text,
       heading: HeadingLevel.HEADING_1,
-      thematicBreak: true
+      thematicBreak: true,
     });
   }
 
   createSubHeading(text) {
     return new Paragraph({
       text: text,
-      heading: HeadingLevel.HEADING_2
+      heading: HeadingLevel.HEADING_2,
     });
   }
 
-  createInstitutionHeader(
-    institutionName,
-    dateText
-  ) {
+  createInstitutionHeader(institutionName, dateText) {
     return new Paragraph({
       tabStops: [
         {
           type: TabStopType.RIGHT,
-          position: TabStopPosition.MAX
-        }
+          position: TabStopPosition.MAX,
+        },
       ],
       children: [
         new TextRun({
           text: institutionName,
-          bold: true
+          bold: true,
         }),
         new TextRun({
           text: `\t${dateText}`,
-          bold: true
-        })
-      ]
+          bold: true,
+        }),
+      ],
     });
   }
 
@@ -174,9 +173,9 @@ export class DocumentCreator {
       children: [
         new TextRun({
           text: roleText,
-          italics: true
-        })
-      ]
+          italics: true,
+        }),
+      ],
     });
   }
 
@@ -184,34 +183,36 @@ export class DocumentCreator {
     return new Paragraph({
       text: text,
       bullet: {
-        level: 0
-      }
+        level: 0,
+      },
     });
   }
 
   // tslint:disable-next-line:no-any
   createSkillList(skills) {
     return new Paragraph({
-      children: [new TextRun(skills.map(skill => skill.name).join(", ") + ".")]
+      children: [
+        new TextRun(skills.map((skill) => skill.name).join(", ") + "."),
+      ],
     });
   }
 
   // tslint:disable-next-line:no-any
   createAchivementsList(achivements) {
     return achivements.map(
-      achievement =>
+      (achievement) =>
         new Paragraph({
           text: achievement.name,
           bullet: {
-            level: 0
-          }
+            level: 0,
+          },
         })
     );
   }
 
   createInterests(interests) {
     return new Paragraph({
-      children: [new TextRun(interests)]
+      children: [new TextRun(interests)],
     });
   }
 
@@ -220,11 +221,7 @@ export class DocumentCreator {
   }
 
   // tslint:disable-next-line:no-any
-  createPositionDateText(
-    startDate,
-    endDate,
-    isCurrent
-  ) {
+  createPositionDateText(startDate, endDate, isCurrent) {
     const startDateText =
       this.getMonthFromInt(startDate.month) + ". " + startDate.year;
     const endDateText = isCurrent
