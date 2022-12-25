@@ -1,6 +1,5 @@
 import React from "react";
 import "../sass/layout/navbar.scss";
-import CreateResume from "./CreateResume";
 
 function NavBar(props) {
   return (
@@ -35,7 +34,14 @@ function NavBar(props) {
           Skills+
         </span>
       </div>
-      <span className="generate-button">Create Resume</span>
+      <span
+        className="generate-button"
+        onClick={() => {
+          props.changeBuildState("generate");
+        }}
+      >
+        Create Resume
+      </span>
     </div>
   );
 }

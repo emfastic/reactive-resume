@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import Education from "./resume_items/Education";
 import Experience from "./resume_items/Experience";
 import Skills from "./resume_items/Skills";
+import CreateResume from "./CreateResume";
 import "../sass/layout/build.scss";
 
 function Build(props) {
@@ -12,7 +13,7 @@ function Build(props) {
     education: <Education user={props.user} />,
     experiences: <Experience user={props.user} />,
     skills: <Skills user={props.user} />,
-    interests: "interests",
+    generate: <CreateResume user={props.user} />,
   };
 
   return (

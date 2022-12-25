@@ -35,7 +35,7 @@
 }
 
 .tag {
-    // position: absolute;
+    appearance: none;
     height: 61px;
     padding: 13px 25px 10px 10px;
     font-size: 18px;
@@ -43,6 +43,9 @@
     // outline: solid;
     outline-color: $midnight-blue;
     outline-width: .3vmin;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 span.small-input {

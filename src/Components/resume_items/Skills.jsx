@@ -9,7 +9,7 @@ import SkillsItem from "../SkillsItem.jsx";
 function Skills(props) {
   const skillRef = useRef();
   const [edit, setEdit] = useState(false);
-  const [label, setLabel] = useState();
+  const [label, setLabel] = useState("Technical Skill");
   const [key, setKey] = useState();
 
   function addSI() {

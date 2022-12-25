@@ -110,6 +110,18 @@ function Experience(props) {
     }
   }
 
+  function compare(a, b) {
+    if (a.section < b.section) {
+      return 1;
+    }
+    if (a.section > b.section) {
+      return -1;
+    }
+    return 0;
+  }
+
+  experienceEntries.sort(compare);
+
   const currentExperiences = experienceEntries.map((entry) => {
     return (
       <HistoryItem

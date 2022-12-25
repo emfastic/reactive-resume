@@ -101,7 +101,7 @@ const education = {
 const skills = { 0: "python", 1: "java", 2: "german" };
 
 export class DocumentCreatorTest {
-  create([profileInfo, education1, skills]) {
+  create([experiences1, education1, skills1]) {
     const document = new Document({
       numbering: {
         config: [
@@ -140,56 +140,60 @@ export class DocumentCreatorTest {
           },
           children: [
             ...this.createPersonal(user),
-            ...this.createEducation(education),
+            this.createSectionHeading("Education"),
+            ...this.createEducationArray(education1),
             new Paragraph({ spacing: { line: 100 } }),
-            this.createSectionHeading("Work Experience"),
-            this.createWorkHeader(
-              experiences.pos1.employer,
-              experiences.pos1.location
-            ),
-            this.createWorkSubHeader(
-              experiences.pos1.title,
-              experiences.pos1.startDate,
-              experiences.pos1.endDate
-            ),
-            ...this.createBullets(experiences.pos1.description),
-            new Paragraph({ spacing: { line: 110 } }),
-            this.createWorkHeader(
-              experiences.pos2.employer,
-              experiences.pos2.location
-            ),
-            this.createWorkSubHeader(
-              experiences.pos2.title,
-              experiences.pos2.startDate,
-              experiences.pos2.endDate
-            ),
-            ...this.createBullets(experiences.pos2.description),
-            new Paragraph({ spacing: { line: 110 } }),
-            this.createWorkHeader(
-              experiences.pos3.employer,
-              experiences.pos3.location
-            ),
-            this.createWorkSubHeader(
-              experiences.pos3.title,
-              experiences.pos3.startDate,
-              experiences.pos3.endDate
-            ),
-            ...this.createBullets(experiences.pos3.description),
-            new Paragraph({}),
-            this.createSectionHeading("Awards and Extracurriculars"),
-            this.createWorkHeader(
-              experiences.pos4.employer,
-              experiences.pos4.location
-            ),
-            this.createWorkSubHeader(
-              experiences.pos4.title,
-              experiences.pos4.startDate,
-              experiences.pos4.endDate
-            ),
-            ...this.createBullets(experiences.pos4.description),
-            new Paragraph({}),
-            this.createSectionHeading("Skills"),
-            this.createSkills(experiences.skills.technical),
+            ...this.createExperienceArray(this.splitExperiences(experiences1)),
+            ...this.createSkillArray(this.splitSkills(skills1)),
+            // this.createSectionHeading("Work Experience"),
+            // this.createWorkHeader(
+            //   experiences.pos1.employer,
+            //   experiences.pos1.location
+            // ),
+            // this.createWorkSubHeader(
+            //   experiences.pos1.title,
+            //   experiences.pos1.startDate,
+            //   experiences.pos1.endDate
+            // ),
+            // ...this.createBullets(experiences.pos1.description),
+            // new Paragraph({ spacing: { line: 110 } }),
+            // this.createWorkHeader(
+            //   experiences.pos2.employer,
+            //   experiences.pos2.location
+            // ),
+            // this.createWorkSubHeader(
+            //   experiences.pos2.title,
+            //   experiences.pos2.startDate,
+            //   experiences.pos2.endDate
+            // ),
+            // ...this.createBullets(experiences.pos2.description),
+            // new Paragraph({ spacing: { line: 110 } }),
+            // this.createWorkHeader(
+            //   experiences.pos3.employer,
+            //   experiences.pos3.location
+            // ),
+            // this.createWorkSubHeader(
+            //   experiences.pos3.title,
+            //   experiences.pos3.startDate,
+            //   experiences.pos3.endDate
+            // ),
+            // ...this.createBullets(experiences.pos3.description),
+            // new Paragraph({}),
+            // this.createSectionHeading("Awards and Extracurriculars"),
+            // this.createWorkHeader(
+            //   experiences.pos4.employer,
+            //   experiences.pos4.location
+            // ),
+            // this.createWorkSubHeader(
+            //   experiences.pos4.title,
+            //   experiences.pos4.startDate,
+            //   experiences.pos4.endDate
+            // ),
+            // ...this.createBullets(experiences.pos4.description),
+            // new Paragraph({}),
+            // this.createSectionHeading("Skills"),
+            // this.createSkills(experiences.skills.technical, "Technical"),
+            // this.createSkills(experiences.skills.technical, "Research"),
           ],
         },
       ],
@@ -208,12 +212,7 @@ export class DocumentCreatorTest {
 
   createEducation(education) {
     return [
-      this.createSectionHeading("Education"),
-      this.createEducationHeader(
-        education.school,
-        education.secSchool,
-        education.location
-      ),
+      this.createEducationHeader(education.school),
       this.createEducationSubHeader(
         education.degreeType,
         education.major,
@@ -221,7 +220,6 @@ export class DocumentCreatorTest {
         education.gradDate,
         education.minor
       ),
-      this.createEducationDesc(education.honors),
     ];
   }
 
@@ -285,7 +283,7 @@ export class DocumentCreatorTest {
     });
   }
 
-  createEducationHeader(institutionName, secSchoolName, location) {
+  createEducationHeader(institutionName, location) {
     return new Paragraph({
       tabStops: [
         {
@@ -295,21 +293,21 @@ export class DocumentCreatorTest {
       ],
       children: [
         new TextRun({
-          text: `${institutionName}, ${secSchoolName}`,
+          text: `${institutionName}`,
           bold: true,
           font: {
             name: fontType,
           },
           size: bodyFontSize,
         }),
-        new TextRun({
-          text: `\t${location}`, // \t to use the tab stop
-          bold: true,
-          font: {
-            name: fontType,
-          },
-          size: bodyFontSize,
-        }),
+        // new TextRun({
+        //   text: `\t${location}`, // \t to use the tab stop
+        //   bold: true,
+        //   font: {
+        //     name: fontType,
+        //   },
+        //   size: bodyFontSize,
+        // }),
       ],
       spacing: { line: 241 }, // add spacing to make sure letters don't get cut off
     });
@@ -333,7 +331,7 @@ export class DocumentCreatorTest {
         new TextRun({
           text: `${degreeType} in ${major}${
             minor ? ", Minor in " + minor : ""
-          } | GPA: ${gpa}/4.00`,
+          } ${gpa ? "| " + gpa + "/4.00" : ""}`,
           italics: true,
           font: {
             name: fontType,
@@ -454,13 +452,13 @@ export class DocumentCreatorTest {
     return bullets;
   }
 
-  createSkills(skills) {
+  createSkills(skills, type) {
     const end = skills.pop();
     const text = skills.join(", ") + `, and ${end}`;
     return new Paragraph({
       children: [
         new TextRun({
-          text: "Technical: ",
+          text: `${type}: `,
           bold: true,
           font: {
             name: fontType,
@@ -476,5 +474,120 @@ export class DocumentCreatorTest {
         }),
       ],
     });
+  }
+
+  createEducationArray(educationObj) {
+    let educationObjArray = Object.values(educationObj);
+    let educationArray = [];
+    educationObjArray.forEach((education) => {
+      educationArray.push(...this.createEducation(education));
+    });
+    return educationArray;
+  }
+
+  splitExperiences(experienceObj) {
+    let experienceObjArray = Object.values(experienceObj);
+    let workArray = [];
+    let researchArray = [];
+    let extracurricularArray = [];
+    experienceObjArray.forEach((experience) => {
+      if (experience.section === "Work") {
+        workArray.push(experience);
+      } else if (experience.section === "Research") {
+        researchArray.push(experience);
+      } else {
+        extracurricularArray.push(experience);
+      }
+    });
+    return {
+      workArray: workArray,
+      researchArray: researchArray,
+      extracurricularArray: extracurricularArray,
+    };
+  }
+
+  createExperienceArray(experiences) {
+    let experienceArray = [];
+    if (experiences.workArray.length !== 0) {
+      experienceArray.push(this.createSectionHeading("Work Experience"));
+      experiences.workArray.forEach((experience) => {
+        experienceArray.push(
+          this.createWorkHeader(experience.organization, experience.location),
+          this.createWorkSubHeader(
+            experience.title,
+            experience.startDate,
+            experience.endDate
+          ),
+          ...this.createBullets(experience.description.split(","))
+        );
+      });
+    }
+    if (experiences.researchArray.length !== 0) {
+      experienceArray.push(this.createSectionHeading("Research Experience"));
+      experiences.researchArray.forEach((experience) => {
+        experienceArray.push(
+          this.createWorkHeader(experience.organization, experience.location),
+          this.createWorkSubHeader(
+            experience.title,
+            experience.startDate,
+            experience.endDate
+          ),
+          ...this.createBullets(experience.description.split(","))
+        );
+      });
+    }
+    if (experiences.extracurricularArray.length !== 0) {
+      experienceArray.push(
+        this.createSectionHeading("Extracurricular Experience")
+      );
+      experiences.extracurricularArray.forEach((experience) => {
+        experienceArray.push(
+          this.createWorkHeader(experience.organization, experience.location),
+          this.createWorkSubHeader(
+            experience.title,
+            experience.startDate,
+            experience.endDate
+          ),
+          ...this.createBullets(experience.description.split(","))
+        );
+      });
+    }
+    return experienceArray;
+  }
+
+  splitSkills(skills) {
+    let skillsObjArray = Object.values(skills);
+    let technicalArray = [];
+    let languageArray = [];
+    let interestArray = [];
+    skillsObjArray.forEach((skill) => {
+      if (skill.tag === "Language") {
+        languageArray.push(skill.skill);
+      } else if (skill.tag === "Technical Skill") {
+        technicalArray.push(skill.skill);
+      } else {
+        interestArray.push(skill.skill);
+      }
+    });
+    return {
+      technicalArray: technicalArray,
+      languageArray: languageArray,
+      interestArray: interestArray,
+    };
+  }
+
+  createSkillArray(skills) {
+    let skillsArray = [];
+    skillsArray.push(this.createSectionHeading("Skills and Interests"));
+    if (skills.technicalArray.length !== 0) {
+      skillsArray.push(this.createSkills(skills.technicalArray, "Technical"));
+    }
+    if (skills.languageArray.length !== 0) {
+      skillsArray.push(this.createSkills(skills.languageArray, "Language"));
+    }
+    if (skills.interestArray.length !== 0) {
+      skillsArray.push(this.createSkills(skills.interestArray, "Interests"));
+    }
+    return skillsArray;
   }
 }
