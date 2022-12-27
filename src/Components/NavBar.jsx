@@ -7,6 +7,16 @@ function NavBar(props) {
       <div className="tag-container">
         <span
           onClick={() => {
+            props.changeBuildState("profile");
+          }}
+          className="experience-tag"
+        >
+          Profile
+        </span>
+      </div>
+      <div className="tag-container">
+        <span
+          onClick={() => {
             props.changeBuildState("education");
           }}
           className="experience-tag"

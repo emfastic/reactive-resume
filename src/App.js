@@ -1,17 +1,9 @@
 import "./App.css";
 import SignIn from "./components/SignIn.jsx";
-import Profile from "./components/Profile.jsx";
 import Build from "./components/Build.jsx";
-import CreateResume from "./components/CreateResume.jsx";
 import React, { useState } from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import {
-  auth,
-  provider,
-  validateBCEmail,
-  writeUserData,
-  dbRef,
-} from "./server/index.js";
+import { auth, provider, writeUserData, dbRef } from "./server/index.js";
 import { onValue, child } from "firebase/database";
 import { signInWithPopup } from "firebase/auth";
 
@@ -29,10 +21,10 @@ function App() {
         if (snapshot.exists()) {
           navState.build();
           setUserState(snapshot.val());
-        } else if (validateBCEmail(user.email)) {
+        } else if (user.email) {
           writeUserData(user);
-          navState.profile();
           setUserState(snapshot.val());
+          navState.build();
         }
       });
     });
@@ -52,9 +44,7 @@ function App() {
             <SignIn handleSignIn={handleSignIn} passUpwards={getNavigate} />
           }
         ></Route>
-        <Route exact path="/profile" element={<Profile />}></Route>
         <Route exact path="/build" element={<Build user={userState} />}></Route>
-        <Route exact path="/create" element={<CreateResume />}></Route>
       </Routes>
     </Router>
   );

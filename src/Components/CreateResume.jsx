@@ -16,21 +16,27 @@ function CreateResume(props) {
       experienceObj,
       educationObj,
       skillsObj,
+      props.user,
     ]);
 
     Packer.toBlob(doc).then((blob) => {
       console.log(blob);
-      saveAs(blob, `${props.user.email}_resume.docx`);
+      saveAs(
+        blob,
+        `${props.user.firstName} ${props.user.lastName} Resume.docx`
+      );
       console.log("Document created successfully");
     });
   }
 
   let educationEntries = [];
 
-  if (props.user.education !== undefined) {
-    for (const [key, value] of Object.entries(props.user.education)) {
-      value.key = key;
-      educationEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.education !== undefined) {
+      for (const [key, value] of Object.entries(props.user.education)) {
+        value.key = key;
+        educationEntries.push(value);
+      }
     }
   }
 
@@ -58,10 +64,12 @@ function CreateResume(props) {
 
   let experienceEntries = [];
 
-  if (props.user.experiences !== undefined) {
-    for (const [key, value] of Object.entries(props.user.experiences)) {
-      value.key = key;
-      experienceEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.experiences !== undefined) {
+      for (const [key, value] of Object.entries(props.user.experiences)) {
+        value.key = key;
+        experienceEntries.push(value);
+      }
     }
   }
 
@@ -88,10 +96,12 @@ function CreateResume(props) {
 
   let skillsEntries = [];
 
-  if (props.user.skills !== undefined) {
-    for (const [key, value] of Object.entries(props.user.skills)) {
-      value.key = key;
-      skillsEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.skills !== undefined) {
+      for (const [key, value] of Object.entries(props.user.skills)) {
+        value.key = key;
+        skillsEntries.push(value);
+      }
     }
   }
 

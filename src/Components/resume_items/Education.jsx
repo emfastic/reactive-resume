@@ -9,6 +9,7 @@ import HistoryItem from "../HistoryItem.jsx";
 
 function Education(props) {
   let schoolRef = useRef(null);
+  let locationRef = useRef(null);
   let majorRef = useRef(null);
   let minorRef = useRef(null);
   let gradDateRef = useRef(null);
@@ -22,6 +23,7 @@ function Education(props) {
       [
         {
           school: schoolRef.current.getValue(),
+          location: locationRef.current.getValue(),
           degreeType: degreeTypeRef.current.getValue(),
           major: majorRef.current.getValue(),
           minor: minorRef.current.getValue(),
@@ -70,10 +72,12 @@ function Education(props) {
 
   let educationEntries = [];
 
-  if (props.user.education !== undefined) {
-    for (const [key, value] of Object.entries(props.user.education)) {
-      value.key = key;
-      educationEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.education !== undefined) {
+      for (const [key, value] of Object.entries(props.user.education)) {
+        value.key = key;
+        educationEntries.push(value);
+      }
     }
   }
 
@@ -94,6 +98,12 @@ function Education(props) {
             className="normal-input"
             label="School"
             ref={schoolRef}
+            type="text"
+          ></TextInput>
+          <TextInput
+            className="normal-input"
+            label="Location"
+            ref={locationRef}
             type="text"
           ></TextInput>
           <TextInput

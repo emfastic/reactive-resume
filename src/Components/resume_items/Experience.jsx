@@ -110,10 +110,12 @@ function Experience(props) {
 
   let experienceEntries = [];
 
-  if (props.user.experiences !== undefined) {
-    for (const [key, value] of Object.entries(props.user.experiences)) {
-      value.key = key;
-      experienceEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.experiences !== undefined) {
+      for (const [key, value] of Object.entries(props.user.experiences)) {
+        value.key = key;
+        experienceEntries.push(value);
+      }
     }
   }
 
