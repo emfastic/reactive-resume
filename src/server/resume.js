@@ -3,13 +3,10 @@ import docx, { convertInchesToTwip } from "docx";
 const {
   AlignmentType,
   Document,
-  HeadingLevel,
-  Packer,
   Paragraph,
   TabStopPosition,
   TabStopType,
   TextRun,
-  Header,
 } = docx;
 
 const fontType = "Times New Roman";
@@ -28,77 +25,6 @@ const user = {
   location: "Chestnut Hill, MA",
   url: "linkedin.com/jakeottiger",
 };
-
-const experiences = {
-  pos1: {
-    employer: "Boston College",
-    title: "Lead Researcher, Prof. Thomas Wesner",
-    location: "Newton, MA",
-    startDate: "August 2022",
-    endDate: "Present",
-    description: [
-      "Head research project that studies subjects in secondary roles (e.g., backup quarterbacks, company vice presidents, and play understudies) to understand preparation strategies and motivations while waiting for primary positions they may never attain",
-      "Manage logistics including applications for funding and finding both interviewees and publishers",
-      "Devise interview questions and conduct interviews of research subjects",
-    ],
-  },
-  pos2: {
-    employer: "Boston College",
-    title: "Legal Intern",
-    location: "Newton, MA",
-    startDate: "August 2022",
-    endDate: "Present",
-    description: [
-      "Digest potential BCIP client trial transcripts into Excel, and recommend whether there is sufficient evidence for BCIP to pursue legal case",
-      "Write intake memorandums on potential clients’ cases to concisely highlight key points of trial and/or appeal that may have caused wrongful conviction",
-    ],
-  },
-  pos3: {
-    employer: "Risk Averse Health Inc.",
-    title: "Software Development Intern",
-    location: "Boston, MA",
-    startDate: "May 2022",
-    endDate: "August 2022",
-    description: [
-      "Automated testing of preventative healthcare startup’s health assessments with React Testing Library and Jest programming libraries",
-      "Converted website styling from CSS to Sass",
-      "Participated in bi-weekly progress meetings concerning business and technological sides of the startup",
-    ],
-  },
-  pos4: {
-    employer: "Boston College",
-    title: "Advanced Study Grant",
-    location: "Boston, MA",
-    startDate: "May 2022",
-    endDate: "December 2023",
-    description: [
-      "Awarded $1452 in funding for independent skill acquisition project, only 1 of every 4 projects was funded",
-      "Ideate project that tracks user credit card balances and optimally pays cards off given a payment amount",
-      "Build Chrome extension with JavaScript utilizing Plaid’s API to securely access credit card account data",
-    ],
-  },
-  skills: {
-    technical: ["Python", "Java", "JavaScript", "Microsoft Office Suite"],
-  },
-};
-
-const firstName = "Jake";
-const lastName = "Ottiger";
-const phoneNumber = "1234567890";
-const email = "ottigerj@bc.edu";
-const location = "Chestnut Hill, MA";
-const url = "linkedin.com/jakeottiger";
-const education = {
-  school: "Boston College",
-  secSchool: "Wallace E. Carroll School of Management",
-  major: "Computer Science and Finance",
-  gradDate: "May 2025",
-  gpa: "4.00",
-  location: location,
-  degreeType: "Bachelor of Science",
-  honors: "Gabelli Presidential Scholar",
-};
-const skills = { 0: "python", 1: "java", 2: "german" };
 
 export class DocumentCreatorTest {
   create([experiences1, education1, skills1]) {
@@ -145,55 +71,6 @@ export class DocumentCreatorTest {
             new Paragraph({ spacing: { line: 100 } }),
             ...this.createExperienceArray(this.splitExperiences(experiences1)),
             ...this.createSkillArray(this.splitSkills(skills1)),
-            // this.createSectionHeading("Work Experience"),
-            // this.createWorkHeader(
-            //   experiences.pos1.employer,
-            //   experiences.pos1.location
-            // ),
-            // this.createWorkSubHeader(
-            //   experiences.pos1.title,
-            //   experiences.pos1.startDate,
-            //   experiences.pos1.endDate
-            // ),
-            // ...this.createBullets(experiences.pos1.description),
-            // new Paragraph({ spacing: { line: 110 } }),
-            // this.createWorkHeader(
-            //   experiences.pos2.employer,
-            //   experiences.pos2.location
-            // ),
-            // this.createWorkSubHeader(
-            //   experiences.pos2.title,
-            //   experiences.pos2.startDate,
-            //   experiences.pos2.endDate
-            // ),
-            // ...this.createBullets(experiences.pos2.description),
-            // new Paragraph({ spacing: { line: 110 } }),
-            // this.createWorkHeader(
-            //   experiences.pos3.employer,
-            //   experiences.pos3.location
-            // ),
-            // this.createWorkSubHeader(
-            //   experiences.pos3.title,
-            //   experiences.pos3.startDate,
-            //   experiences.pos3.endDate
-            // ),
-            // ...this.createBullets(experiences.pos3.description),
-            // new Paragraph({}),
-            // this.createSectionHeading("Awards and Extracurriculars"),
-            // this.createWorkHeader(
-            //   experiences.pos4.employer,
-            //   experiences.pos4.location
-            // ),
-            // this.createWorkSubHeader(
-            //   experiences.pos4.title,
-            //   experiences.pos4.startDate,
-            //   experiences.pos4.endDate
-            // ),
-            // ...this.createBullets(experiences.pos4.description),
-            // new Paragraph({}),
-            // this.createSectionHeading("Skills"),
-            // this.createSkills(experiences.skills.technical, "Technical"),
-            // this.createSkills(experiences.skills.technical, "Research"),
           ],
         },
       ],
@@ -217,7 +94,7 @@ export class DocumentCreatorTest {
         education.degreeType,
         education.major,
         education.gpa,
-        education.gradDate,
+        this.formatDate(education.gradDate),
         education.minor
       ),
     ];
@@ -453,8 +330,7 @@ export class DocumentCreatorTest {
   }
 
   createSkills(skills, type) {
-    const end = skills.pop();
-    const text = skills.join(", ") + `, and ${end}`;
+    const text = skills.join(", ");
     return new Paragraph({
       children: [
         new TextRun({
@@ -506,17 +382,30 @@ export class DocumentCreatorTest {
     };
   }
 
+  compareDates(a, b) {
+    if (a.endDate < b.endDate) {
+      return 1;
+    }
+    if (a.endDate > b.endDate) {
+      return -1;
+    }
+    return 0;
+  }
+
   createExperienceArray(experiences) {
     let experienceArray = [];
     if (experiences.workArray.length !== 0) {
       experienceArray.push(this.createSectionHeading("Work Experience"));
+
+      experiences.workArray.sort(this.compareDates);
+
       experiences.workArray.forEach((experience) => {
         experienceArray.push(
           this.createWorkHeader(experience.organization, experience.location),
           this.createWorkSubHeader(
             experience.title,
-            experience.startDate,
-            experience.endDate
+            this.formatDate(experience.startDate),
+            this.formatDate(experience.endDate)
           ),
           ...this.createBullets(experience.description.split(","))
         );
@@ -524,13 +413,16 @@ export class DocumentCreatorTest {
     }
     if (experiences.researchArray.length !== 0) {
       experienceArray.push(this.createSectionHeading("Research Experience"));
+
+      experiences.researchArray.sort(this.compareDates);
+
       experiences.researchArray.forEach((experience) => {
         experienceArray.push(
           this.createWorkHeader(experience.organization, experience.location),
           this.createWorkSubHeader(
             experience.title,
-            experience.startDate,
-            experience.endDate
+            this.formatDate(experience.startDate),
+            this.formatDate(experience.endDate)
           ),
           ...this.createBullets(experience.description.split(","))
         );
@@ -540,13 +432,16 @@ export class DocumentCreatorTest {
       experienceArray.push(
         this.createSectionHeading("Extracurricular Experience")
       );
+
+      experiences.extracurricularArray.sort(this.compareDates);
+
       experiences.extracurricularArray.forEach((experience) => {
         experienceArray.push(
           this.createWorkHeader(experience.organization, experience.location),
           this.createWorkSubHeader(
             experience.title,
-            experience.startDate,
-            experience.endDate
+            this.formatDate(experience.startDate),
+            this.formatDate(experience.endDate)
           ),
           ...this.createBullets(experience.description.split(","))
         );
@@ -589,5 +484,26 @@ export class DocumentCreatorTest {
       skillsArray.push(this.createSkills(skills.interestArray, "Interests"));
     }
     return skillsArray;
+  }
+
+  formatDate(date) {
+    const months = {
+      "01": "January",
+      "02": "February",
+      "03": "March",
+      "04": "April",
+      "05": "May",
+      "06": "June",
+      "07": "July",
+      "08": "August",
+      "09": "September",
+      10: "October",
+      11: "November",
+      12: "December",
+    };
+
+    return date === "Present"
+      ? date
+      : months[date.slice(5)] + " " + date.slice(0, 4);
   }
 }

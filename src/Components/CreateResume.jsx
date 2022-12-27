@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import { DocumentCreatorTest } from "../server/resume.js";
+import CreateItem from "./CreateItem.jsx";
 import "../sass/layout/create.scss";
 
 function CreateResume(props) {
@@ -24,17 +25,6 @@ function CreateResume(props) {
     });
   }
 
-  function handleClick(experience, object, setObject) {
-    let newObject = { ...object };
-    if (experience.key in newObject) {
-      delete newObject[experience.key];
-    } else {
-      newObject[experience.key] = experience;
-    }
-    setObject(newObject);
-    console.log(Object.values(newObject));
-  }
-
   let educationEntries = [];
 
   if (props.user.education !== undefined) {
@@ -44,16 +34,25 @@ function CreateResume(props) {
     }
   }
 
+  function compare(a, b) {
+    if (a.section < b.section) {
+      return 1;
+    }
+    if (a.section > b.section) {
+      return -1;
+    }
+    return 0;
+  }
+
+  educationEntries.sort(compare);
+
   const educationItems = educationEntries.map((entry) => {
     return (
-      <div>
-        <label for={entry.key}>{entry.school}</label>
-        <input
-          type="checkbox"
-          id={entry.key}
-          onChange={() => handleClick(entry, educationObj, setEducationObj)}
-        ></input>
-      </div>
+      <CreateItem
+        setObject={setEducationObj}
+        object={educationObj}
+        experience={entry}
+      ></CreateItem>
     );
   });
 
@@ -66,16 +65,24 @@ function CreateResume(props) {
     }
   }
 
+  experienceEntries.sort(compare);
+
+  // <div>
+  //   <label for={entry.key}>{entry.organization}</label>
+  //   <input
+  //     type="checkbox"
+  //     id={entry.key}
+  //     onChange={() => handleClick(entry, experienceObj, setExperienceObj)}
+  //   ></input>
+  // </div>
+
   const experienceItems = experienceEntries.map((entry) => {
     return (
-      <div>
-        <label for={entry.key}>{entry.organization}</label>
-        <input
-          type="checkbox"
-          id={entry.key}
-          onChange={() => handleClick(entry, experienceObj, setExperienceObj)}
-        ></input>
-      </div>
+      <CreateItem
+        setObject={setExperienceObj}
+        object={experienceObj}
+        experience={entry}
+      />
     );
   });
 
@@ -90,14 +97,11 @@ function CreateResume(props) {
 
   const skillsItems = skillsEntries.map((entry) => {
     return (
-      <div>
-        <label for={entry.key}>{entry.skill}</label>
-        <input
-          type="checkbox"
-          id={entry.key}
-          onChange={() => handleClick(entry, skillsObj, setSkillsObj)}
-        ></input>
-      </div>
+      <CreateItem
+        setObject={setSkillsObj}
+        object={skillsObj}
+        experience={entry}
+      ></CreateItem>
     );
   });
 
@@ -110,7 +114,9 @@ function CreateResume(props) {
       <div className="column">
         <div className="section-header">Experience History</div>
         {experienceItems}
-        <span onClick={generate}>TEST</span>
+        <span className="generate-button middle" onClick={generate}>
+          Generate
+        </span>
       </div>
       <div className="column">
         <div className="section-header">Skills and Interests</div>

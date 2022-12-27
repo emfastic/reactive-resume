@@ -42,7 +42,10 @@ function Experience(props) {
           title: titleRef.current.getValue(),
           location: locationRef.current.getValue(),
           startDate: startDateRef.current.getValue(),
-          endDate: endDateRef.current.getValue(),
+          endDate:
+            endDateRef.current.getValue() === ""
+              ? "Present"
+              : endDateRef.current.getValue(),
           description: convertDescsToCSV(),
           section: document.getElementsByClassName("tag")[0].value,
         },
@@ -81,7 +84,10 @@ function Experience(props) {
       title: titleRef.current.getValue(),
       location: locationRef.current.getValue(),
       startDate: startDateRef.current.getValue(),
-      endDate: endDateRef.current.getValue(),
+      endDate:
+        endDateRef.current.getValue() === ""
+          ? "Present"
+          : endDateRef.current.getValue(),
       description: convertDescsToCSV(),
       section: document.getElementsByClassName("tag")[0].value,
     };

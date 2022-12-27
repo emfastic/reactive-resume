@@ -21,6 +21,9 @@
     &:hover {
         cursor: pointer;
     }
+    &.clicked {
+        background-color: green;
+    }
 }
 
 .experience-form {
@@ -40,9 +43,7 @@
     padding: 13px 25px 10px 10px;
     font-size: 18px;
     border-radius: 22px;
-    // outline: solid;
     outline-color: $midnight-blue;
-    outline-width: .3vmin;
     &:hover {
         cursor: pointer;
     }
