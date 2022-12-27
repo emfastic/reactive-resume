@@ -52,6 +52,7 @@ function Experience(props) {
       ],
       "experiences"
     );
+    handleBack();
   }
 
   function convertCSVtoDescription(description) {
@@ -101,7 +102,7 @@ function Experience(props) {
     locationRef.current.setValue("");
     startDateRef.current.setValue("");
     endDateRef.current.setValue("");
-    descriptionRef.current.setValue("");
+    descriptionRef.current.setValue("\u2022 ");
     document.getElementsByClassName("tag")[0].value = "Work";
     setEdit(false);
     setKey("");
@@ -109,10 +110,12 @@ function Experience(props) {
 
   let experienceEntries = [];
 
-  if (props.user.experiences !== undefined) {
-    for (const [key, value] of Object.entries(props.user.experiences)) {
-      value.key = key;
-      experienceEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.experiences !== undefined) {
+      for (const [key, value] of Object.entries(props.user.experiences)) {
+        value.key = key;
+        experienceEntries.push(value);
+      }
     }
   }
 

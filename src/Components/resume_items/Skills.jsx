@@ -52,10 +52,12 @@ function Skills(props) {
 
   let skillsEntries = [];
 
-  if (props.user.skills !== undefined) {
-    for (const [key, value] of Object.entries(props.user.skills)) {
-      value.key = key;
-      skillsEntries.push(value);
+  if (props.user !== null) {
+    if (props.user.skills !== undefined) {
+      for (const [key, value] of Object.entries(props.user.skills)) {
+        value.key = key;
+        skillsEntries.push(value);
+      }
     }
   }
 

@@ -17,17 +17,8 @@ const bodyFontSize = 24;
 // Redefine because of smaller margins
 TabStopPosition.MAX = 12200;
 
-const user = {
-  firstName: "Jake",
-  lastName: "Ottiger",
-  phoneNumber: "1234567890",
-  email: "ottigerj@bc.edu",
-  location: "Chestnut Hill, MA",
-  url: "linkedin.com/jakeottiger",
-};
-
 export class DocumentCreator {
-  create([experiences1, education1, skills1]) {
+  create([experiences, education, skills, user]) {
     const document = new Document({
       numbering: {
         config: [
@@ -67,10 +58,10 @@ export class DocumentCreator {
           children: [
             ...this.createPersonal(user),
             this.createSectionHeading("Education"),
-            ...this.createEducationArray(education1),
+            ...this.createEducationArray(education),
             new Paragraph({ spacing: { line: 100 } }),
-            ...this.createExperienceArray(this.splitExperiences(experiences1)),
-            ...this.createSkillArray(this.splitSkills(skills1)),
+            ...this.createExperienceArray(this.splitExperiences(experiences)),
+            ...this.createSkillArray(this.splitSkills(skills)),
           ],
         },
       ],
@@ -82,14 +73,14 @@ export class DocumentCreator {
   createPersonal(user) {
     return [
       this.createNameHeader(user.firstName, user.lastName),
-      this.createContact(user.location, user.email, user.phoneNumber, user.url),
+      this.createContact(user.email, user.phoneNumber, user.website),
       new Paragraph({ children: [] }),
     ];
   }
 
   createEducation(education) {
     return [
-      this.createEducationHeader(education.school),
+      this.createEducationHeader(education.school, education.location),
       this.createEducationSubHeader(
         education.degreeType,
         education.major,
@@ -127,13 +118,13 @@ export class DocumentCreator {
     );
   }
 
-  createContact(location, email, phone, url) {
+  createContact(email, phone, website) {
     phone = this.formatPhoneNum(phone);
     return new Paragraph({
       alignment: AlignmentType.CENTER,
       children: [
         new TextRun({
-          text: `${location} | ${email} | ${phone} | ${url}`,
+          text: `${email} | ${phone} | ${website}`,
           size: 26,
           font: {
             name: fontType,
@@ -177,14 +168,14 @@ export class DocumentCreator {
           },
           size: bodyFontSize,
         }),
-        // new TextRun({
-        //   text: `\t${location}`, // \t to use the tab stop
-        //   bold: true,
-        //   font: {
-        //     name: fontType,
-        //   },
-        //   size: bodyFontSize,
-        // }),
+        new TextRun({
+          text: `\t${location}`, // \t to use the tab stop
+          bold: true,
+          font: {
+            name: fontType,
+          },
+          size: bodyFontSize,
+        }),
       ],
       spacing: { line: 241 }, // add spacing to make sure letters don't get cut off
     });
@@ -357,6 +348,7 @@ export class DocumentCreator {
     let educationArray = [];
     educationObjArray.forEach((education) => {
       educationArray.push(...this.createEducation(education));
+      educationArray.push(new Paragraph({ children: [] }));
     });
     return educationArray;
   }
@@ -409,6 +401,7 @@ export class DocumentCreator {
           ),
           ...this.createBullets(experience.description.split(","))
         );
+        experienceArray.push(new Paragraph({ children: [] }));
       });
     }
     if (experiences.researchArray.length !== 0) {
@@ -426,6 +419,7 @@ export class DocumentCreator {
           ),
           ...this.createBullets(experience.description.split(","))
         );
+        experienceArray.push(new Paragraph({ children: [] }));
       });
     }
     if (experiences.extracurricularArray.length !== 0) {
@@ -445,6 +439,7 @@ export class DocumentCreator {
           ),
           ...this.createBullets(experience.description.split(","))
         );
+        experienceArray.push(new Paragraph({ children: [] }));
       });
     }
     return experienceArray;
