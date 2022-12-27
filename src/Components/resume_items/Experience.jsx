@@ -52,6 +52,7 @@ function Experience(props) {
       ],
       "experiences"
     );
+    handleBack();
   }
 
   function convertCSVtoDescription(description) {
@@ -101,7 +102,7 @@ function Experience(props) {
     locationRef.current.setValue("");
     startDateRef.current.setValue("");
     endDateRef.current.setValue("");
-    descriptionRef.current.setValue("");
+    descriptionRef.current.setValue("\u2022 ");
     document.getElementsByClassName("tag")[0].value = "Work";
     setEdit(false);
     setKey("");
