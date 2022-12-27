@@ -22,7 +22,8 @@
         cursor: pointer;
     }
     &.clicked {
-        background-color: green;
+        background-color: $midnight-blue;
+        color: $white;
     }
 }
 

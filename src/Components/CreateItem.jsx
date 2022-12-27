@@ -21,6 +21,27 @@ function CreateItem(props) {
     console.log(Object.values(newObject));
   }
 
+  function formatDate(date) {
+    const months = {
+      "01": "January",
+      "02": "February",
+      "03": "March",
+      "04": "April",
+      "05": "May",
+      "06": "June",
+      "07": "July",
+      "08": "August",
+      "09": "September",
+      10: "October",
+      11: "November",
+      12: "December",
+    };
+
+    return date === "Present"
+      ? date
+      : months[date.slice(5)] + " " + date.slice(0, 4);
+  }
+
   return (
     <div className="item-div">
       <div
@@ -30,8 +51,12 @@ function CreateItem(props) {
         {props.experience.organization === undefined
           ? props.experience.school === undefined
             ? props.experience.skill
-            : `${props.experience.school}, ${props.experience.major}, ${props.experience.gradDate}`
-          : `${props.experience.organization}, ${props.experience.title}, ${props.experience.endDate}`}
+            : `${props.experience.school}, ${
+                props.experience.major
+              }, ${formatDate(props.experience.gradDate)}`
+          : `${props.experience.organization}, ${
+              props.experience.title
+            }, ${formatDate(props.experience.endDate)}`}
       </div>
       {props.experience.school === undefined ? (
         <div

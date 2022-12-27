@@ -26,7 +26,7 @@ const user = {
   url: "linkedin.com/jakeottiger",
 };
 
-export class DocumentCreatorTest {
+export class DocumentCreator {
   create([experiences1, education1, skills1]) {
     const document = new Document({
       numbering: {

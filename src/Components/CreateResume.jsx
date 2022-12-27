@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
-import { DocumentCreatorTest } from "../server/resume.js";
+import { DocumentCreator } from "../server/resume.js";
 import CreateItem from "./CreateItem.jsx";
 import "../sass/layout/create.scss";
 
@@ -11,7 +11,7 @@ function CreateResume(props) {
   const [skillsObj, setSkillsObj] = useState({});
 
   function generate() {
-    const documentCreator = new DocumentCreatorTest();
+    const documentCreator = new DocumentCreator();
     const doc = documentCreator.create([
       experienceObj,
       educationObj,
@@ -20,7 +20,7 @@ function CreateResume(props) {
 
     Packer.toBlob(doc).then((blob) => {
       console.log(blob);
-      saveAs(blob, "test.docx");
+      saveAs(blob, `${props.user.email}_resume.docx`);
       console.log("Document created successfully");
     });
   }
