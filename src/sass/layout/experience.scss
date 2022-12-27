@@ -1,0 +1,257 @@
+@import "../utilities/variables";
+
+.current-experiences {
+    // background-color: blue;
+    left: 70%;
+    position: absolute;
+    top: 55%;
+    width: 50%;
+    height: 503px;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+
+.experience-item {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: $light-lavender;
+    padding: 8px 12px;
+    font-size: 18px;
+    &:hover {
+        cursor: pointer;
+    }
+    &.clicked {
+        background-color: $midnight-blue;
+        color: $white;
+    }
+}
+
+.experience-form {
+    // max-width: 340px;
+    position: absolute;
+    top: 1%;
+    transform: translate(-20%, 2%);
+    left: 10%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.tag {
+    appearance: none;
+    height: 61px;
+    padding: 13px 25px 10px 10px;
+    font-size: 18px;
+    border-radius: 22px;
+    outline-color: $midnight-blue;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+span.small-input {
+    position: relative;
+    
+    input {
+        font-size: 20px;
+        margin-right: 20px;
+        // margin-bottom: 20px;
+    
+        height: 48px;
+        border-radius: 24px;
+        border: none;
+        // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
+        padding: 13px 15px 0px;
+        line-height: 1;
+        outline: none;
+        box-shadow: none;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background-color: white;
+        outline: solid;
+        outline-color: $midnight-blue;
+        outline-width: .3vmin;
+    
+        &:focus {
+            box-shadow: 0 0 8px 8px $light-lavender;
+        }
+    }
+
+    label {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(0px, 20px) scale(1);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 24px;
+        line-height: 1;
+        // make equal to padding in input
+        left: 21px;
+
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+    
+    label.month {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(-6px, 9px) scale(0.8);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 18px;
+        white-space: nowrap;
+    
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+
+    &:focus-within label {
+        transform: translate(-6px, 9px) scale(0.8);
+        color: $midnight-blue;
+        font-size: 18px;
+    }
+}
+
+span.small-input-2 {
+    position: relative;
+    left: 23%;
+    top: 34.56%;
+    
+    input {
+        font-size: 20px;
+        margin-right: 20px;
+        // margin-bottom: 20px;
+    
+        height: 48px;
+        border-radius: 24px;
+        border: none;
+        // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
+        padding: 13px 15px 0px;
+        line-height: 1;
+        outline: none;
+        box-shadow: none;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background-color: white;
+        outline: solid;
+        outline-color: $midnight-blue;
+        outline-width: .3vmin;
+    
+        &:focus {
+            box-shadow: 0 0 8px 8px $light-lavender;
+        }
+    }
+
+    label {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(0px, 20px) scale(1);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 24px;
+        line-height: 1;
+        // make equal to padding in input
+        left: 21px;
+
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+    
+    label.month {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(-6px, 9px) scale(0.8);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 18px;
+        white-space: nowrap;
+    
+        &.filled {
+            transform: translate(-6px, 9px) scale(0.8);
+            font-size: 18px;
+        }
+    }
+
+    &:focus-within label {
+        transform: translate(-6px, 9px) scale(0.8);
+        color: $midnight-blue;
+        font-size: 18px;
+    }
+}
+
+.text-container {
+    position: relative;
+
+    label {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(0px, 28px) scale(1);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 24px;
+        line-height: 1;
+        // make equal to padding in input
+        left: 21px;
+    }
+
+    label.area {
+        position: absolute;
+        pointer-events: none;
+        // moves label vertically and horizontally
+        transform: translate(-6px, 9px) scale(0.8);
+        transform-origin: top left;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        color: #6f81a5;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    &:focus-within label {
+        transform: translate(-6px, 9px) scale(0.8);
+        color: $midnight-blue;
+        font-size: 18px;
+    }
+
+    .filled {
+        transform: translate(-6px, 9px) scale(0.8);
+        font-size: 18px;
+    }
+
+    textarea {
+        resize: none;
+        height: 200px;
+        width: 400px;
+        border-radius: 24px;
+        border: none;
+        // positions input cursor: padding put on top to move down and adjust spacing bt input and placeholder/label
+        padding: 30px 21px 0px;
+        font-size: 16px;
+        line-height: 1;
+        outline: none;
+        box-shadow: none;
+        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background-color: white;
+        outline: solid;
+        outline-color: $midnight-blue;
+        outline-width: .3vmin;
+
+        &:focus {
+            box-shadow: 0 0 8px 8px $light-lavender;
+        } 
+    }
+}

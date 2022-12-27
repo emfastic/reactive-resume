@@ -1,0 +1,22 @@
+@import "../utilities/variables";
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    flex: 1;
+    max-width: 33.33%;
+    border-right: 1px solid $light-lavender;
+    overflow: auto;
+    // background-color: orange;
+}
+
+.section-header {
+    text-align: center;
+    margin-top: 14px;
+    margin-bottom: 25px;
+    font-size: 36px;
+}
+

@@ -4,7 +4,6 @@
     height: 100%;
     width: 100%;
     position: relative;
-    // display: flex;
     // background-color: $light-lavender;
 }
 
@@ -17,32 +16,41 @@
 }
 
 .submit-container {
-    display: flex;
-    justify-content: right;
     .submit-button {
         background-color: $midnight-blue;
         padding: 10px 20px 10px 20px;
         border-radius: 12px;
         color: $light-lavender;
         font-size: 24px;
+        float: right;
         &:hover {
             cursor: pointer;
         }
+
+        &.left {
+            float:left
+        }
     }
 }
-  
+
 .profile-form {
     // max-width: 340px;
     position: absolute;
-    top: 55%;
-    transform: translate(-25%, -50%);
-    left: 12.5%;
+    top: 1%;
+    transform: translate(-20%, 2%);
+    left: 10%;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+}
+
+.item-div {
+    position: relative;
+    // background-color: aqua;
+    margin-bottom: 15px;
 }
   
-.input-container {
+span.normal-input {
     position: relative;
 
     label {
@@ -66,7 +74,7 @@
         transform: translate(-6px, 9px) scale(0.8);
         transform-origin: top left;
         transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-        color: #6f81a5;
+        // color: green;
         font-size: 18px;
     }
 

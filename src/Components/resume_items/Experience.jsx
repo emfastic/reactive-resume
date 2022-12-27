@@ -1,172 +1,214 @@
-import React, { useRef, useState } from "react"
-import { updateKeyedObjectSection } from "../../server/index.js"
-import ExperienceDesc from "./ExperienceDesc.jsx"
-import TextInput from "../TextInput.jsx"
-import Education from "./Education.jsx"
-import "../../sass/layout/education.scss"
+import React, { useRef, useState } from "react";
+import {
+  updateKeyedObjectSection,
+  updateExperience,
+} from "../../server/index.js";
+import TextInput from "../TextInput.jsx";
+import "../../sass/layout/experience.scss";
+import TextArea from "../TextArea.jsx";
+import HistoryItem from "../HistoryItem.jsx";
 
-function Experience() {
-    let organizationRef = useRef()
-    let titleRef= useRef()
-    let locationRef = useRef()
-    let startDateRef = useRef()
-    let endDateRef= useRef()
+function Experience(props) {
+  let organizationRef = useRef();
+  let titleRef = useRef();
+  let locationRef = useRef();
+  let startDateRef = useRef();
+  let endDateRef = useRef();
+  let descriptionRef = useRef();
+  const [edit, setEdit] = useState(false);
+  const [key, setKey] = useState();
 
-    const [show1, setShow1] = useState(false)
-    const [show2, setShow2] = useState(false)
-    const [show3, setShow3] = useState(false)
-    const [show4, setShow4] = useState(false)
-    const [show5, setShow5] = useState(false)
-    const [valObjArray, setValObjArray] = useState([{description: null, setDescription: null}, {description: null, setDescription: null}, {description: null, setDescription: null}, {description: null, setDescription: null}, {description: null, setDescription: null}, {description: null, setDescription: null}])
-    const setArray = [true, () => setShow1(!show1), () => setShow2(!show2), () => setShow3(!show3), () => setShow4(!show4), () => setShow5(!show5)]
-    const [bulletArray, setBulletArray] = useState([true, false, false, false, false, false])
+  function convertDescsToCSV() {
+    let descriptionStr = descriptionRef.current
+      .getValue()
+      .replaceAll("\u2022 ", "")
+      .trim();
+    let descriptionArray = descriptionStr.split("\n\n");
 
-    /* show the next bullet on user return, shifting the vals to give appearance of next input being newly rendered */
-    function showBullet(call_idx, setArray, bulletArray) {
-        
-        // Find the first false element in shown state array
-        const firstFalse = bulletArray.findIndex(element => !element)
-        
-        // If all are true print message
-        // TODO: Render error message
-        if (firstFalse === -1) {
-            console.log('all are enabled')
-            return
-        }
-        
-        // Update bullet array to contain new shown value
-        const newBulletArray = [...bulletArray]
-        newBulletArray[firstFalse] = true
-        setBulletArray(newBulletArray)
+    descriptionArray.forEach((element, idx) => {
+      descriptionArray[idx] =
+        element.charAt(0).toUpperCase() + element.slice(1);
+    });
 
-        // If input after call idx isn't shown, show and return
-        if (firstFalse - call_idx === 1) {
-            setArray[firstFalse]()
-            return
-        }
+    return descriptionArray.join(",");
+  }
 
-        // Store description for next element in temp
-        // Set next element to empty and set the following to next's initial val
-        valObjArray[call_idx + 1].setDescription('')
+  function handleExperienceSubmit() {
+    // get values from text inputs; convert the descriptions
+    updateKeyedObjectSection(
+      [
+        {
+          organization: organizationRef.current.getValue(),
+          title: titleRef.current.getValue(),
+          location: locationRef.current.getValue(),
+          startDate: startDateRef.current.getValue(),
+          endDate:
+            endDateRef.current.getValue() === ""
+              ? "Present"
+              : endDateRef.current.getValue(),
+          description: convertDescsToCSV(),
+          section: document.getElementsByClassName("tag")[0].value,
+        },
+      ],
+      "experiences"
+    );
+  }
 
-        // Start at the position past the empty input
-        // Go to last position in list (5)
-        for (let i = call_idx + 1; i < 5; i++) {
-            // Set the next position to the val of the last (shifting the element's vals)
-            // Imitates a new input being rendered next to the previous
-            console.log(valObjArray[i].description)
-            valObjArray[i + 1].setDescription(valObjArray[i].description)
-        }
+  function convertCSVtoDescription(description) {
+    let descriptionArray = description.split(",");
+    description = "";
+    descriptionArray.forEach((descriptionBullet) => {
+      description += `\u2022 ${descriptionBullet}\n\n`;
+    });
 
-        // Once the values are changed, show the new item (actually at the end)
-        setArray[firstFalse]()
+    return description;
+  }
+
+  function handleEdit(experienceData) {
+    organizationRef.current.setValue(experienceData.organization);
+    titleRef.current.setValue(experienceData.title);
+    locationRef.current.setValue(experienceData.location);
+    startDateRef.current.setValue(experienceData.startDate);
+    endDateRef.current.setValue(experienceData.endDate);
+    descriptionRef.current.setValue(
+      convertCSVtoDescription(experienceData.description)
+    );
+    document.getElementsByClassName("tag")[0].value = experienceData.section;
+    setEdit(true);
+    setKey(experienceData.key);
+  }
+
+  function handleExperienceUpdate() {
+    let experience = {
+      organization: organizationRef.current.getValue(),
+      title: titleRef.current.getValue(),
+      location: locationRef.current.getValue(),
+      startDate: startDateRef.current.getValue(),
+      endDate:
+        endDateRef.current.getValue() === ""
+          ? "Present"
+          : endDateRef.current.getValue(),
+      description: convertDescsToCSV(),
+      section: document.getElementsByClassName("tag")[0].value,
+    };
+    updateExperience("experiences", key, experience);
+    handleBack();
+  }
+
+  function handleBack() {
+    organizationRef.current.setValue("");
+    titleRef.current.setValue("");
+    locationRef.current.setValue("");
+    startDateRef.current.setValue("");
+    endDateRef.current.setValue("");
+    descriptionRef.current.setValue("");
+    document.getElementsByClassName("tag")[0].value = "Work";
+    setEdit(false);
+    setKey("");
+  }
+
+  let experienceEntries = [];
+
+  if (props.user.experiences !== undefined) {
+    for (const [key, value] of Object.entries(props.user.experiences)) {
+      value.key = key;
+      experienceEntries.push(value);
     }
+  }
 
-    /* pass the val state and set val state up to experiences; change val array on effect change */ 
-    function getRefsFromChild(description, setDescription, idx) {
-
-        // Dereference val obj state array (tracking exp desc vals)
-        const newValArray = [...valObjArray]
-
-        // Set the val array obj at position idx corresponding to component's idx
-        newValArray[idx].description = description
-        newValArray[idx].setDescription = setDescription
-
-        // Update val array
-        setValObjArray(newValArray)
+  function compare(a, b) {
+    if (a.section < b.section) {
+      return 1;
     }
-
-    function removeBullet(call_idx, setArray, bulletArray) {
-
-        // Find the last true element in shown state array
-        const lastTrue = bulletArray.lastIndexOf(true)
-
-        // Catch user trying to delete only bullet
-        // TODO: set error message that you need 1 bullet
-        if (lastTrue === 0) {
-            console.log('need at least 1 bullet')
-            return
-        }
-        
-        // Update bullet array that has deleted value
-        const newBulletArray = [...bulletArray]
-        newBulletArray[lastTrue] = false
-        setBulletArray(newBulletArray)
-
-        // If last bullet in the list: hide bullet and return
-        if (lastTrue === call_idx) {
-            setArray[lastTrue]()
-            return
-        }
-
-        // Set last to be empty so when bullet is added it is empty again
-        valObjArray[lastTrue].setDescription('')
-
-        // Start at last true position and decrement to call idx
-        for (let i = lastTrue; i > call_idx; i--) {
-            // Set the next position to the val of the last (shifting the element's vals)
-            // Imitates a new input being rendered next to the previous
-            valObjArray[i - 1].setDescription(valObjArray[i].description)
-        }
-
-        // Once the values are changed, show the new item (actually at the end)
-        setArray[lastTrue]()
+    if (a.section > b.section) {
+      return -1;
     }
+    return 0;
+  }
 
-    function convertDescsToCSV(valObjArray) {
-        let description = ''
+  experienceEntries.sort(compare);
 
-        // Iterate through each description appending it to desc, separated by comma with no space
-        // If user didn't capitalize the first word of desc capitalize it
-        // If user has leading or trailing whitespace trim it
-        valObjArray.forEach(element => {
-            let descBullet = element.description.trim()
-            description += descBullet.charAt(0).toUpperCase() + descBullet.slice(1) + ','
-        })
-
-        // Remove last comma bc it is unnecessary
-        description = description.slice(0, -1)
-
-        return description
-    }
-
-    function handleExperienceSubmit() {
-        // get values from text inputs; convert the descriptions
-        updateKeyedObjectSection([{
-            organization: organizationRef.current.getValue(),
-            title: titleRef.current.getValue(),
-            location: locationRef.current.getValue(),
-            startDate: startDateRef.current.getValue(),
-            endDate: endDateRef.current.getValue(),
-            description: convertDescsToCSV(valObjArray)
-        }, 'experiences'])
-    }
-
-    // let box = document.querySelector('.experience-tag')
-    // console.log(box.offsetWidth);
-
-    
-
+  const currentExperiences = experienceEntries.map((entry) => {
     return (
-        <>
+      <HistoryItem
+        entry={entry}
+        handleEdit={handleEdit}
+        key={entry.key}
+        type="experience"
+      />
+    );
+  });
+
+  // console.log(experienceEntries)
+
+  // let box = document.querySelector('.small-input')
+  // console.log(box.offsetHeight);
+
+  return (
+    <>
+      <form className="experience-form">
+        <TextInput
+          className="small-input"
+          label="Organization"
+          ref={organizationRef}
+        ></TextInput>
+        <TextInput
+          className="small-input"
+          label="Position Title"
+          ref={titleRef}
+        ></TextInput>
+        <TextInput
+          className="small-input"
+          label="Location"
+          ref={locationRef}
+        ></TextInput>
         <div>
-        <TextInput label="Position Title" ref={titleRef}></TextInput>
-        <TextInput label="Organization" ref={organizationRef}></TextInput>
+          <TextInput
+            className="small-input month"
+            label="Start"
+            ref={startDateRef}
+            type="month"
+          ></TextInput>
+          <TextInput
+            className="small-input month"
+            label="End (blank if current role)"
+            ref={endDateRef}
+            type="month"
+          ></TextInput>
         </div>
-        <div>
-        <TextInput label="Location" ref={locationRef}></TextInput>
-        <TextInput label="Start Date" ref={startDateRef}></TextInput>
-        <TextInput label="End Date" ref={endDateRef}></TextInput>
+        <select className="tag">
+          <option value="Work">Work Experience</option>
+          <option value="Research">Research Experience</option>
+          <option value="Extracurricular">Extracurricular Experience</option>
+        </select>
+        <TextArea
+          className="text-container"
+          label="Description"
+          ref={descriptionRef}
+        ></TextArea>
+        <div className="submit-container">
+          {edit ? (
+            <span className="submit-button left" onClick={handleBack}>
+              Back
+            </span>
+          ) : (
+            ""
+          )}
+          {edit ? (
+            <span className="submit-button" onClick={handleExperienceUpdate}>
+              Edit
+            </span>
+          ) : (
+            <span className="submit-button" onClick={handleExperienceSubmit}>
+              Add
+            </span>
+          )}
         </div>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(0, setArray, bulletArray)}} addDesc={() => {showBullet(0, setArray, bulletArray)}} idx={0} shown={true}></ExperienceDesc>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(1, setArray, bulletArray)}} addDesc={() => {showBullet(1, setArray, bulletArray)}} idx={1} shown={show1}></ExperienceDesc>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(2, setArray, bulletArray)}} addDesc={() => {showBullet(2, setArray, bulletArray)}} idx={2} shown={show2}></ExperienceDesc>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(3, setArray, bulletArray)}} addDesc={() => {showBullet(3, setArray, bulletArray)}} idx={3} shown={show3}></ExperienceDesc>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(4, setArray, bulletArray)}} addDesc={() => {showBullet(4, setArray, bulletArray)}} idx={4} shown={show4}></ExperienceDesc>
-        <ExperienceDesc passUpwards={getRefsFromChild} delDesc={() => {removeBullet(5, setArray, bulletArray)}} addDesc={() => {showBullet(5, setArray, bulletArray)}} idx={5} shown={show5}></ExperienceDesc>
-        <button onClick={handleExperienceSubmit}>Update Experiences</button>
-        </>
-    )
+      </form>
+      <div className="current-education-header">Experience History</div>
+      <div className="current-experiences">{currentExperiences}</div>
+    </>
+  );
 }
 
 export default Experience;
