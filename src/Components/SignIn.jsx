@@ -85,12 +85,6 @@ function SignIn(props) {
         <div onClick={props.handleSignIn} className="signin-button login">
           Continue with Google
         </div>
-        <div className="signup-subtext">
-          <span className="text">No account? Sign up with </span>
-          <span onClick={props.handleSignIn} className="google">
-            Google
-          </span>
-        </div>
       </div>
     </>
   );
