@@ -11,6 +11,15 @@ function CreateResume(props) {
   const [skillsObj, setSkillsObj] = useState({});
 
   function generate() {
+    console.log(Object.entries(experienceObj));
+    if (
+      Object.entries(experienceObj).length === 0 &&
+      Object.entries(educationObj).length === 0 &&
+      Object.entries(skillsObj).length === 0
+    ) {
+      alert("Select experiences by clicking on them to add to your resume!");
+      return;
+    }
     const documentCreator = new DocumentCreator();
     const doc = documentCreator.create([
       experienceObj,
