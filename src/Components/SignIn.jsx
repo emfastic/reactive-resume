@@ -15,7 +15,6 @@ function SignIn(props) {
   const navigate = useNavigate();
 
   props.passUpwards({
-    profile: () => navigate("/profile"),
     build: () => navigate("/build"),
   });
 

@@ -8,8 +8,7 @@ import CreateResume from "./CreateResume";
 import "../sass/layout/build.scss";
 
 function Build(props) {
-  console.log(props);
-  const [buildState, setBuildState] = useState("experiences");
+  const [buildState, setBuildState] = useState("profile");
 
   const buildObject = {
     profile: <Profile user={props.user} changeState={setBuildState} />,
